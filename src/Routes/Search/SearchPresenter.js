@@ -44,12 +44,10 @@ const SearchPanel = styled.div`
   padding: 8px;
 `;
 
-const SearchList = styled.div`
-
-`;
+const SearchList = styled.div``;
 
 const SearchImg = styled.img`
-  vertical-align: middle
+  vertical-align: middle;
 `;
 
 const SearchInput = styled.input`
@@ -73,9 +71,9 @@ const SearchInput = styled.input`
   }
 `;
 const Container = styled.div`
-  display:flex;
-  width: 100%
-  height: 100%
+  display: flex;
+  width: 100%;
+  height: 100%;
   padding: 0;
   margin: 0;
 `;
@@ -156,62 +154,95 @@ const SearchPresenter = (props) => (
     </Helmet>
 
     <Header></Header>
- 
+
     <SearchHeader>
-      {props.ActiveTab === "최소시간" ? <ActiveSearchTab onClick={() => props.setActiveTab("최소시간")}>최소시간</ActiveSearchTab> 
-      : <SearchTab onClick={() => props.setActiveTab("최소시간")}>최소시간</SearchTab>}
-      {props.ActiveTab === "최단거리" ? <ActiveSearchTab onClick={() => props.setActiveTab("최단거리")}>최단거리</ActiveSearchTab> 
-      : <SearchTab onClick={() => props.setActiveTab("최단거리")}>최단거리</SearchTab>}
-      {props.ActiveTab === "최소비용" ? <ActiveSearchTab onClick={() => props.setActiveTab("최소비용")}>최소비용</ActiveSearchTab> 
-      : <SearchTab onClick={() => props.setActiveTab("최소비용")}>최소비용</SearchTab>}
+      {props.ActiveTab === "최소시간" ? (
+        <ActiveSearchTab onClick={() => props.setActiveTab("최소시간")}>
+          최소시간
+        </ActiveSearchTab>
+      ) : (
+        <SearchTab onClick={() => props.setActiveTab("최소시간")}>
+          최소시간
+        </SearchTab>
+      )}
+      {props.ActiveTab === "최단거리" ? (
+        <ActiveSearchTab onClick={() => props.setActiveTab("최단거리")}>
+          최단거리
+        </ActiveSearchTab>
+      ) : (
+        <SearchTab onClick={() => props.setActiveTab("최단거리")}>
+          최단거리
+        </SearchTab>
+      )}
+      {props.ActiveTab === "최소비용" ? (
+        <ActiveSearchTab onClick={() => props.setActiveTab("최소비용")}>
+          최소비용
+        </ActiveSearchTab>
+      ) : (
+        <SearchTab onClick={() => props.setActiveTab("최소비용")}>
+          최소비용
+        </SearchTab>
+      )}
     </SearchHeader>
 
-    {props.Share === false ?
-    <SearchPanel>
-      <SearchList>
-        <SearchImg src={Clock}/>
-        <SearchInput type="time" placeholder="출발시간 설정"></SearchInput>
-        <SearchImg src={Search} onClick={props.setActiveSearchResult}/>
-      </SearchList>
-      <SearchList>
-        <SearchImg src={Cancel}/>
-        <SearchInput placeholder="출발지 검색" value={props.DepartureStation} onChange={props.setDepartureStation}></SearchInput>
-        <SearchImg src={Space1}/>
-      </SearchList>
-      <SearchList>
-        <SearchImg src={UpDownArrow}/>
-        <SearchInput placeholder="도착지 검색" value={props.ArrivalStation} onChange={props.setArrivalStation}></SearchInput>
-        <SearchImg src={Space2}/>
-      </SearchList>
-    </SearchPanel>
-    :
-    <SharePanel>
-      <SearchResultFont1>{props.ActiveTab}</SearchResultFont1>
-      <SearchResultFont2>{props.SearchDepartureStation} → {props.SearchArrivalStation}</SearchResultFont2>
-      <SearchResultFont2>~~분, ~~개 정류장 이동</SearchResultFont2>
-      <SearchResultFont2>~~시, ~~분 도착예정</SearchResultFont2>
-      <ShareInput placeholder="이메일 입력"></ShareInput>
-      <ShareButton>이메일 보내기</ShareButton>
-    </SharePanel>
-    }
-
-    { props.SearchResult ? 
-    <Container>
-      <SearchResult>
+    {props.Share === false ? (
+      <SearchPanel>
+        <SearchList>
+          <SearchImg src={Clock} />
+          <SearchInput type="time" placeholder="출발시간 설정"></SearchInput>
+          <SearchImg src={Search} onClick={props.setActiveSearchResult} />
+        </SearchList>
+        <SearchList>
+          <SearchImg src={Cancel} />
+          <SearchInput
+            placeholder="출발지 검색"
+            value={props.DepartureStation}
+            onChange={props.setDepartureStation}
+          ></SearchInput>
+          <SearchImg src={Space1} />
+        </SearchList>
+        <SearchList>
+          <SearchImg src={UpDownArrow} />
+          <SearchInput
+            placeholder="도착지 검색"
+            value={props.ArrivalStation}
+            onChange={props.setArrivalStation}
+          ></SearchInput>
+          <SearchImg src={Space2} />
+        </SearchList>
+      </SearchPanel>
+    ) : (
+      <SharePanel>
         <SearchResultFont1>{props.ActiveTab}</SearchResultFont1>
-        <SearchResultFont2>{props.SearchDepartureStation} → {props.SearchArrivalStation}</SearchResultFont2>
+        <SearchResultFont2>
+          {props.SearchDepartureStation} → {props.SearchArrivalStation}
+        </SearchResultFont2>
         <SearchResultFont2>~~분, ~~개 정류장 이동</SearchResultFont2>
         <SearchResultFont2>~~시, ~~분 도착예정</SearchResultFont2>
-        <SearchShareButton onClick={() => props.setActiveShare()}>도착시간 공유</SearchShareButton>
-      </SearchResult>
+        <ShareInput placeholder="이메일 입력"></ShareInput>
+        <ShareButton>이메일 보내기</ShareButton>
+      </SharePanel>
+    )}
 
-      <SearchResultMap>
-        지하철 노선도가 들어갈 자리
-      </SearchResultMap>
-    </Container> 
-    : 
-    <Container></Container>
-    }
+    {props.SearchResult ? (
+      <Container>
+        <SearchResult>
+          <SearchResultFont1>{props.ActiveTab}</SearchResultFont1>
+          <SearchResultFont2>
+            {props.SearchDepartureStation} → {props.SearchArrivalStation}
+          </SearchResultFont2>
+          <SearchResultFont2>~~분, ~~개 정류장 이동</SearchResultFont2>
+          <SearchResultFont2>~~시, ~~분 도착예정</SearchResultFont2>
+          <SearchShareButton onClick={() => props.setActiveShare()}>
+            도착시간 공유
+          </SearchShareButton>
+        </SearchResult>
+
+        <SearchResultMap>지하철 노선도가 들어갈 자리</SearchResultMap>
+      </Container>
+    ) : (
+      <Container></Container>
+    )}
   </>
 );
 SearchPresenter.propTypes = {
@@ -231,7 +262,5 @@ SearchPresenter.propTypes = {
   setActiveSearchResult: PropTypes.func.isRequired,
   setActiveShare: PropTypes.func.isRequired,
 };
-
-
 
 export default SearchPresenter;
