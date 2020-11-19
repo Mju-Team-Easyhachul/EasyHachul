@@ -1,7 +1,7 @@
 import React from "react";
 import SearchPresenter from "./SearchPresenter";
-import SearchTab from "./SearchPresenter";
-import SearchTabActive from "./SearchPresenter";
+
+var SearchResultStorage = {};
 
 export default class extends React.Component {
   constructor(props, context) {
@@ -17,7 +17,14 @@ export default class extends React.Component {
       ActiveTab: "최소시간",
       SearchResult: false,
       Share: false,
+      SearchList: [],
     };
+  }
+
+  componentDidMount(){
+    this.setState({
+      SearchList: JSON.parse(localStorage.getItem("SearchList")) || []
+    })
   }
 
   setActiveTab = (Tab) => {
@@ -25,6 +32,12 @@ export default class extends React.Component {
       ActiveTab: Tab,
       SearchResult: false,
       Share: false,
+    });
+  };
+
+  setDepartureTime =(e) => {
+    this.setState({
+      DepartureTime: e.target.value,
     });
   };
 
@@ -47,10 +60,15 @@ export default class extends React.Component {
       });
     }
     this.setState({
+      SearchDepartureTime: this.state.DepartureTime,
       SearchDepartureStation: this.state.DepartureStation,
       SearchArrivalStation: this.state.ArrivalStation,
-    });
+    },
+    () => {
+      this.saveSearchList();
+    })
   };
+  
 
   setActiveShare = () => {
     if (this.state.Share === false) {
@@ -60,6 +78,14 @@ export default class extends React.Component {
       });
     }
   };
+
+  saveSearchList = () => {
+    const value = this.state.SearchDepartureTime + " " + this.state.SearchDepartureStation + "→" + this.state.SearchArrivalStation
+    this.setState(
+      state => ({ SearchList: [...state.SearchList, value]}),
+      () => localStorage.setItem("SearchList", JSON.stringify(this.state.SearchList))
+    );
+  }
 
   render() {
     return (
@@ -74,6 +100,7 @@ export default class extends React.Component {
         SearchResult={this.state.SearchResult}
         Share={this.state.Share}
         setActiveTab={this.setActiveTab}
+        setDepartureTime={this.setDepartureTime}
         setDepartureStation={this.setDepartureStation}
         setArrivalStation={this.setArrivalStation}
         setActiveSearchResult={this.setActiveSearchResult}

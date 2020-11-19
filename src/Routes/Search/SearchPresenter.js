@@ -23,6 +23,13 @@ const SearchTab = styled.div`
   text-align: center;
   line-height: 70px;
   font-size: 30px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 160px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 22px;
+  }
 `;
 
 const ActiveSearchTab = styled.div`
@@ -34,6 +41,13 @@ const ActiveSearchTab = styled.div`
   text-align: center;
   line-height: 70px;
   font-size: 30px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 160px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 22px;
+  }
 `;
 
 const SearchPanel = styled.div`
@@ -42,12 +56,21 @@ const SearchPanel = styled.div`
   background-color: #84e0cb;
   text-align: center;
   padding: 8px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    height: 180px;
+  }
 `;
 
 const SearchList = styled.div``;
 
 const SearchImg = styled.img`
   vertical-align: middle;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 28px;
+    height: 28px;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -69,6 +92,11 @@ const SearchInput = styled.input`
     left: 10px;
     color: white;
   }
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 80%;
+    height: 40px;
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -76,6 +104,10 @@ const Container = styled.div`
   height: 100%;
   padding: 0;
   margin: 0;
+  
+  @media (min-width: 320px) and (max-width: 480px){
+    display: block;
+  }
 `;
 
 const SearchResult = styled.div`
@@ -83,18 +115,33 @@ const SearchResult = styled.div`
   height: 100%;
   margin: 0;
   padding: 0;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 100%;
+    height: 20%;
+  }
 `;
 
 const SearchResultFont1 = styled.p`
   font-size: 45px;
   margin: 28px;
   text-align: center;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    font-size: 22px;
+    margin: 20px;
+  }
 `;
 
 const SearchResultFont2 = styled.p`
   font-size: 40px;
   margin: 28px;
   text-align: center;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    font-size: 22px;
+    margin: 20px;
+  }
 `;
 
 const SearchResultMap = styled.div`
@@ -103,6 +150,11 @@ const SearchResultMap = styled.div`
   margin: 50px;
   font-size: 50px;
   text-align: center;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 375px;
+    height: 60px;
+  }
 `;
 
 const SearchShareButton = styled.div`
@@ -114,6 +166,14 @@ const SearchShareButton = styled.div`
   margin: 28px auto;
   color: #2699fb;
   line-height: 70px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 207px;
+    height: 50px;
+    border-radius: 16px;
+    margin: 10px auto;
+    line-height: 50px;
+  }
 `;
 
 const SharePanel = styled.div`
@@ -126,6 +186,13 @@ const SharePanel = styled.div`
   margin-top: 4%;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 90%;
+    height: 42%;
+    border-radius: 44px;
+    margin: 100px auto;
+  }
 `;
 
 const ShareInput = styled.input`
@@ -134,6 +201,11 @@ const ShareInput = styled.input`
   border-radius: 10px;
   border: solid 3px #84e0cb;
   margin: 0 auto;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 80%;
+    height: 40px;
+  }
 `;
 
 const ShareButton = styled.div`
@@ -145,6 +217,16 @@ const ShareButton = styled.div`
   line-height: 70px;
   color: #84e0cb;
   margin: 60px auto;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 134px;
+    height: 46px;
+    border-radius: 16px;
+    border: solid 2px #84e0cb;
+    font-weight: bold;
+    line-height: 50px;
+    margin: 30px auto;
+  }
 `;
 
 const SearchPresenter = (props) => (
@@ -189,7 +271,11 @@ const SearchPresenter = (props) => (
       <SearchPanel>
         <SearchList>
           <SearchImg src={Clock} />
-          <SearchInput type="time" placeholder="출발시간 설정"></SearchInput>
+          <SearchInput
+           type="time" 
+           placeholder="출발시간 설정"
+           onChange={props.setDepartureTime}
+           ></SearchInput>
           <SearchImg src={Search} onClick={props.setActiveSearchResult} />
         </SearchList>
         <SearchList>
@@ -247,16 +333,17 @@ const SearchPresenter = (props) => (
 );
 SearchPresenter.propTypes = {
   ActiveTab: PropTypes.string.isRequired,
-  DepartureTime: PropTypes.number.isRequired,
+  DepartureTime: PropTypes.string.isRequired,
   DepartureStation: PropTypes.number.isRequired,
   ArrivalStation: PropTypes.number.isRequired,
-  SearchDepartureTime: PropTypes.number.isRequired,
+  SearchDepartureTime: PropTypes.string.isRequired,
   SearchDepartureStation: PropTypes.number.isRequired,
   SearchArrivalStation: PropTypes.number.isRequired,
   SearchResult: PropTypes.bool.isRequired,
   Share: PropTypes.bool.isRequired,
 
   setActiveTab: PropTypes.func.isRequired,
+  setDepartureTime: PropTypes.func.isRequired,
   setDepartureStation: PropTypes.func.isRequired,
   setArrivalStation: PropTypes.func.isRequired,
   setActiveSearchResult: PropTypes.func.isRequired,
