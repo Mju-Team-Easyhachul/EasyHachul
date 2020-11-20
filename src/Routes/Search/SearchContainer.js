@@ -1,17 +1,15 @@
 import React from "react";
 import SearchPresenter from "./SearchPresenter";
 
-var SearchResultStorage = {};
-
 export default class extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      DepartureTime: 0,
+      DepartureTime: "00:00",
       DepartureStation: 0,
       ArrivalStation: 0,
-      SearchDepartureTime: 0,
+      SearchDepartureTime: "00:00",
       SearchDepartureStation: 0,
       SearchArrivalStation: 0,
       ActiveTab: "최소시간",
@@ -87,6 +85,29 @@ export default class extends React.Component {
     );
   }
 
+  deleteSearchList = index => {
+    if (window.confirm("목록에서 지우시겠습니까?")) {
+      this.setState(
+        state => ({
+          SearchList: [
+            ...state.SearchList.slice(0, index),
+            ...state.SearchList.slice(index + 1)
+          ]
+        }),
+        () =>
+          localStorage.setItem("SearchList", JSON.stringify(this.state.SearchList))
+      );
+    }
+  }
+
+  updateSearchInput = index => {
+    this.setState({
+      DepartureTime: this.state.SearchList[index].slice(0, 5),
+      DepartureStation: this.state.SearchList[index].slice(6, 9),
+      ArrivalStation: this.state.SearchList[index].slice(10, 13),
+    })
+  }
+
   render() {
     return (
       <SearchPresenter
@@ -99,12 +120,16 @@ export default class extends React.Component {
         SearchArrivalStation={this.state.SearchArrivalStation}
         SearchResult={this.state.SearchResult}
         Share={this.state.Share}
+        SearchList={this.state.SearchList}
         setActiveTab={this.setActiveTab}
         setDepartureTime={this.setDepartureTime}
         setDepartureStation={this.setDepartureStation}
         setArrivalStation={this.setArrivalStation}
         setActiveSearchResult={this.setActiveSearchResult}
         setActiveShare={this.setActiveShare}
+        saveSearchList={this.saveSearchList}
+        deleteSearchList={this.deleteSearchList}
+        updateSearchInput={this.updateSearchInput}
       />
     );
   }

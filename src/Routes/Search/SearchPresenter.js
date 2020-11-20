@@ -5,6 +5,7 @@ import Helmet from "react-helmet";
 import Header from "../../Components/Header";
 import Clock from "../../assets/Clock.png";
 import Cancel from "../../assets/Cancel.png";
+import CancelRed from "../../assets/CancelRed.png"
 import UpDownArrow from "../../assets/Up Down arrow.png";
 import Search from "../../assets/Search.png";
 import Space1 from "../../assets/Space1.png";
@@ -94,7 +95,7 @@ const SearchInput = styled.input`
   }
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 80%;
+    width: 70%;
     height: 40px;
   }
 `;
@@ -122,7 +123,7 @@ const SearchResult = styled.div`
   }
 `;
 
-const SearchResultFont1 = styled.p`
+const SearchFont1 = styled.p`
   font-size: 45px;
   margin: 28px;
   text-align: center;
@@ -133,7 +134,7 @@ const SearchResultFont1 = styled.p`
   }
 `;
 
-const SearchResultFont2 = styled.p`
+const SearchFont2 = styled.p`
   font-size: 40px;
   margin: 28px;
   text-align: center;
@@ -229,6 +230,35 @@ const ShareButton = styled.div`
   }
 `;
 
+const RecentlySearch = styled.div`
+  width: 30%;
+  height: 30%;
+  margin: 0;
+  padding: 0;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 100%;
+    height: 20%;
+  }
+`;
+
+const RecentlySearchList = styled.div`
+  display: flex;
+`;
+
+const CancelImg = styled.img`
+  vertical-align: middle;
+  margin-top: 35px;
+  width: 20px;
+  height: 20px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    margin-top: 23px;
+    width: 14px;
+    height: 14px;
+  }
+`;
+
 const SearchPresenter = (props) => (
   <>
     <Helmet>
@@ -274,6 +304,7 @@ const SearchPresenter = (props) => (
           <SearchInput
            type="time" 
            placeholder="출발시간 설정"
+           value={props.DepartureTime}
            onChange={props.setDepartureTime}
            ></SearchInput>
           <SearchImg src={Search} onClick={props.setActiveSearchResult} />
@@ -299,12 +330,12 @@ const SearchPresenter = (props) => (
       </SearchPanel>
     ) : (
       <SharePanel>
-        <SearchResultFont1>{props.ActiveTab}</SearchResultFont1>
-        <SearchResultFont2>
+        <SearchFont1>{props.ActiveTab}</SearchFont1>
+        <SearchFont2>
           {props.SearchDepartureStation} → {props.SearchArrivalStation}
-        </SearchResultFont2>
-        <SearchResultFont2>~~분, ~~개 정류장 이동</SearchResultFont2>
-        <SearchResultFont2>~~시, ~~분 도착예정</SearchResultFont2>
+        </SearchFont2>
+        <SearchFont2>~~분, ~~개 정류장 이동</SearchFont2>
+        <SearchFont2>~~시, ~~분 도착예정</SearchFont2>
         <ShareInput placeholder="이메일 입력"></ShareInput>
         <ShareButton>이메일 보내기</ShareButton>
       </SharePanel>
@@ -313,12 +344,12 @@ const SearchPresenter = (props) => (
     {props.SearchResult ? (
       <Container>
         <SearchResult>
-          <SearchResultFont1>{props.ActiveTab}</SearchResultFont1>
-          <SearchResultFont2>
+          <SearchFont1>{props.ActiveTab}</SearchFont1>
+          <SearchFont2>
             {props.SearchDepartureStation} → {props.SearchArrivalStation}
-          </SearchResultFont2>
-          <SearchResultFont2>~~분, ~~개 정류장 이동</SearchResultFont2>
-          <SearchResultFont2>~~시, ~~분 도착예정</SearchResultFont2>
+          </SearchFont2>
+          <SearchFont2>~~분, ~~개 정류장 이동</SearchFont2>
+          <SearchFont2>~~시, ~~분 도착예정</SearchFont2>
           <SearchShareButton onClick={() => props.setActiveShare()}>
             도착시간 공유
           </SearchShareButton>
@@ -327,7 +358,21 @@ const SearchPresenter = (props) => (
         <SearchResultMap>지하철 노선도가 들어갈 자리</SearchResultMap>
       </Container>
     ) : (
-      <Container></Container>
+      props.Share === false ? (
+        <Container>
+          <RecentlySearch>
+            <SearchFont1>최근검색</SearchFont1>
+            {props.SearchList.map((Search, index) => (
+              <RecentlySearchList key={index}>
+                <SearchFont2 key={index} onClick={() => props.updateSearchInput(index)}>{Search}</SearchFont2>
+                <CancelImg src={CancelRed} key={index} onClick={() => props.deleteSearchList(index)}/>
+              </RecentlySearchList>
+            ))}
+          </RecentlySearch>
+        </Container>
+      ) : (
+        <Container></Container>
+      )
     )}
   </>
 );
@@ -341,6 +386,7 @@ SearchPresenter.propTypes = {
   SearchArrivalStation: PropTypes.number.isRequired,
   SearchResult: PropTypes.bool.isRequired,
   Share: PropTypes.bool.isRequired,
+  SearchList: PropTypes.array.isRequired,
 
   setActiveTab: PropTypes.func.isRequired,
   setDepartureTime: PropTypes.func.isRequired,
@@ -348,6 +394,9 @@ SearchPresenter.propTypes = {
   setArrivalStation: PropTypes.func.isRequired,
   setActiveSearchResult: PropTypes.func.isRequired,
   setActiveShare: PropTypes.func.isRequired,
+  saveSearchList: PropTypes.func.isRequired,
+  deleteSearchList: PropTypes.func.isRequired,
+  updateSearchInput: PropTypes.func.isRequired,
 };
 
 export default SearchPresenter;
