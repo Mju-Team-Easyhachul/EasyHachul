@@ -1,9 +1,12 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import Logo from "./Logo";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import Logo from './Logo';
 
 const HeaderContaienr = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: center;
