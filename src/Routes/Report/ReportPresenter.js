@@ -91,7 +91,7 @@ const ReportPresenter = props => (
             </ReportText>
           )}
 
-          <ReportButton onClick={e => props.handleReportButton(e)}>신고하기 ></ReportButton>
+          <ReportButton onClick={e => props.handleReportButton(e)}>신고하기 </ReportButton>
         </ReportItem>
       ))}
     </ReportContainer>

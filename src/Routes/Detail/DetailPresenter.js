@@ -1,190 +1,264 @@
-import React from "react";
-import styled from "styled-components";
-import Helmet from "react-helmet";
-import Header from "../../Components/Header";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
+import Helmet from 'react-helmet';
+import Header from '../../Components/Header';
+import MapContent from './MapContent';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
-/* Top 관련 Style*/
-// Top 호선, 역이름 표시 담당 Container
 const TopContainer = styled.div`
-  background-color: #18a51f;
-  justify-content: center;
-  display: grid;
-  height: 140px;
-  margin-top: 2%;
-  margin-left: 2%;
-  margin-right: 2%;
-  border-radius: 50px;
+  @media screen and (max-width: 900px) {
+    height: 5%;
+  }
+  width: 79%;
+  height: 10%;
+  margin: 1% 10% 0 10.5%;
+  background: ${props => props.color || 'black'};
 `;
-// Top 배경 위에 타원
-const LineDisplay = styled.div`
-  background-color: #ffffff;
-  height: 130px;
-  width: 320px;
-  border: solid;
-  border-color: #84e0cb;
-  border-radius: 50px;
-  position: relative;
+const LineNumber = styled.div`
+  width: 20%;
+  height: 100%;
+  margin: 0 0 0 40%;
+  border: 2px solid #18a51f;
+  background: white;
+  border-radius: 30px;
 `;
-// 배경색있는 노선숫자
-const LineDisplayText1 = styled.div`
+const LineNumberFont = styled.h1`
+  @media (max-width: 900px) {
+    margin-top: 11%;
+    font-size: 20px;
+  }
+  margin-top: 11%;
+  font-size: 45px;
   text-align: center;
-  margin-top: 12%;
-  margin-left: 35%;
-  background-color: #18a51f;
-  border: solid;
-  border-radius: 20px;
-  border-color: #ffffff;
-  display: inline-block;
-  text-align: center;
-  font-size: 50px;
-`;
-// 노선숫자
-const LineDisplayText2 = styled.div`
-  text-align: center;
-  display: inline-block;
-  font-size: 40px;
 `;
 
-/* Top 아래관련 Style*/
-// 역정보, 열차시간표, 주변지도 선택관련 Style
-const ChoiceContainer = styled.div`
-  display: grid;
-  border-radius: 50px;
-  grid-template-columns: repeat(3, 1fr);
-  justify-content: center;
-  margin-top: 5px;
-  background-color: #353535;
-  height: 100px;
-  color: #ffffff;
-  margin-left: 2%;
-  margin-right: 2%;
+const SelectContainer = styled.div`
+  width: 80%;
+  height: 10%;
+  margin: 1px 10% 1% 10.4%;
 `;
-const ChoiceText = styled.div`
-  text-align: center;
+const SelectButton = styled.button`
+  @media screen and (max-width: 900px) {
+    font-size: 17px;
+    height: 80%;
+  }
+  width: 33%;
+  height: 100%;
+  background: ${props => props.color || '#303747'};
+  font-size: 45px;
+  color: white;
+`;
+const SelectInfoButton = styled.button`
+  @media screen and (max-width: 900px) {
+    font-size: 17px;
+    height: 80%;
+  }
+  width: 33%;
+  height: 100%;
+  background: ${props => props.color || 'black'};
+  font-size: 45px;
+  color: white;
+`;
+
+const BottomContainer = styled.div`
+  width: 80%;
+  height: 80%;
+  margin: 1px 10% 1% 10.4%;
+`;
+const BaseInfoDivider = styled.hr`
+  width: 98.6%;
+  border: solid;
+  margin: 1px 10% 1% 0;
+`;
+const BaseInfoText = styled.h2`
+  @media (max-width: 900px) {
+    font-size: 20px;
+  }
+  font-size: 25px;
+  text-align: left;
+`;
+
+const InfoButton = styled.button`
+  @media screen and (max-width: 900px) {
+    font-size: 17px;
+    height: 7%;
+  }
+  width: 24.8%;
+  height: 10%;
+  background: #303747;
   font-size: 35px;
-  margin-top: 40px;
-`;
-
-/* Middle 관련 Style*/
-// Middle Text&Divider Style
-const Divider = styled.hr`
-  width: 95%;
-`;
-const MiddleText1 = styled.div`
-  margin-top: 50px;
-  margin-left: 3%;
-  font-size: 30px;
-`;
-const MiddleText2 = styled.div`
-  display: inline;
-  margin-top: 20px;
-  margin-left: 3%;
-  font-size: 30px;
-`;
-
-/* Bottom 관련 Style*/
-// Bottom 위치한 Text Style
-const BottomText = styled.div`
-  color: #ffffff;
-  margin-top: 8px;
-  text-align: center;
-  font-size: 30px;
-`;
-// Bottom 평일,토요일,공휴일
-const BottomContainer1 = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: 3%;
-  margin-left: 2%;
-  margin-right: 2%;
-`;
-const DayDisplay = styled.div`
-  background-color: #353535;
-  height: 40px;
-  width: 100%;
-  border-radius: 50px;
-`;
-
-//Bottom 노선,종착역,첫차,막차 및 정보칸
-const BottomContainer2 = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  margin-left: 2%;
-  margin-right: 2%;
-`;
-const LineInfoDisplay = styled.div`
-  background-color: #84e0cb;
-  height: 40px;
-  width: 100%;
-  margin-top: 1%;
-  border-radius: 50px;
+  ${'' /* border-radius: 20px 20px 20px 20px; */}
+  color: white;
 `;
 const LineInfoDetail = styled.div`
-  margin-top: 1%;
+  @media (max-width: 900px) {
+    height: 30%;
+    width: 24.8%;
+  }
   background-color: #ffffff;
-  height: 950%;
-  width: 99%;
-  border: solid;
+  margin-top: 1%;
+  margin-bottom: 2%;
+  height: 50%;
+  width: 24.8%;
+  display: inline-block;
+  border: 2px solid;
   border-color: #535353;
   border-radius: 30px;
 `;
+const LineInfoDivider = styled.hr`
+  border: 1px solid #717171;
+`;
+const LineInfoFont1 = styled.h2`
+  @media (max-width: 900px) {
+    font-size: 22.5px;
+    margin-bottom: 20%;
+  }
+  text-align: center;
+  font-size: 35.61px;
+  margin-top: 24%;
+  margin-bottom: 24%;
+`;
+const LineInfoFont2 = styled.h2`
+  @media (max-width: 900px) {
+    font-size: 22.5px;
+    margin-top: 20%;
+  }
+  text-align: center;
+  font-size: 35.61px;
+  margin-top: 30%;
+`;
+const LineInfoFont3 = styled.h1`
+  @media (max-width: 900px) {
+    font-size: 15px;
+    margin-top: 20%;
+  }
+  text-align: center;
+  font-size: 23.74px;
+  margin-top: 23%;
+  margin-bottom: 22%;
+`;
+const LineInfoFont4 = styled.h2`
+  @media (max-width: 900px) {
+    font-size: 15px;
+    margin-top: 20%;
+  }
+  text-align: center;
+  font-size: 23.74px;
+  margin-top: 25%;
+`;
 
-const DetailPresenter = () => (
+const DetailPresenter = props => (
   <>
     <Helmet>
       <title>Detail | EasyHachul</title>
     </Helmet>
-    <Header></Header>
+    <Header />
 
-    <TopContainer>
-      <LineDisplay>
-        <LineDisplayText1>1</LineDisplayText1>
-        <LineDisplayText2>101</LineDisplayText2>
-      </LineDisplay>
+    {/* 역 번호 */}
+    <TopContainer color={props.LineColor}>
+      <LineNumber>
+        <LineNumberFont>{props.LineNumber}</LineNumberFont>
+      </LineNumber>
     </TopContainer>
 
-    <ChoiceContainer>
-      <ChoiceText>역정보</ChoiceText>
-      <ChoiceText>열차시간표</ChoiceText>
-      <ChoiceText>주변지도</ChoiceText>
-    </ChoiceContainer>
+    {/* 버튼 선택 */}
+    <SelectContainer>
+      {props.Active === '역정보' ? (
+        <SelectInfoButton color={props.LineColor} onClick={(() => props.setActive('역정보'), () => props.setActive())}>
+          역정보
+        </SelectInfoButton>
+      ) : (
+        <SelectButton onClick={() => props.setActive('역정보')}>역정보</SelectButton>
+      )}
+      {props.Active === '열차시간표' ? (
+        <SelectInfoButton
+          color={props.LineColor}
+          onClick={(() => props.setActive('열차시간표'), () => props.setActive())}
+        >
+          열차시간표
+        </SelectInfoButton>
+      ) : (
+        <SelectButton onClick={() => props.setActive('열차시간표')}>열차시간표</SelectButton>
+      )}
+      {props.Active === '주변지도' ? (
+        <SelectInfoButton
+          color={props.LineColor}
+          onClick={(() => props.setActive('주변지도'), () => props.setActive())}
+        >
+          주변지도
+        </SelectInfoButton>
+      ) : (
+        <SelectButton onClick={() => props.setActive('주변지도')}>주변지도</SelectButton>
+      )}
+    </SelectContainer>
 
-    <MiddleText1>기본정보</MiddleText1>
-    <Divider></Divider>
-    <MiddleText2>역이름: 201</MiddleText2>
+    {/* 기본정보 */}
+    {props.Active === '역정보' && (
+      <BottomContainer>
+        <BaseInfoText>기본정보</BaseInfoText>
+        <BaseInfoDivider />
+        <BaseInfoText>역이름 : {props.LineNumber} </BaseInfoText>
+      </BottomContainer>
+    )}
 
-    <BottomContainer1>
-      <DayDisplay>
-        <BottomText>평일</BottomText>
-      </DayDisplay>
-      <DayDisplay>
-        <BottomText>토요일</BottomText>
-      </DayDisplay>
-      <DayDisplay>
-        <BottomText>공휴일</BottomText>
-      </DayDisplay>
-    </BottomContainer1>
+    {/* 열차시간표 */}
+    {props.Active === '열차시간표' && (
+      <BottomContainer>
+        <InfoButton>노선</InfoButton>
+        <InfoButton>종착역</InfoButton>
+        <InfoButton>첫차</InfoButton>
+        <InfoButton>막차</InfoButton>
+        <LineInfoDetail>
+          <LineInfoFont1>내선</LineInfoFont1>
+          <LineInfoDivider />
+          <LineInfoFont2>외선</LineInfoFont2>
+        </LineInfoDetail>
+        <LineInfoDetail>
+          <LineInfoFont1>123</LineInfoFont1>
+          <LineInfoDivider />
+          <LineInfoFont2>102</LineInfoFont2>
+        </LineInfoDetail>
+        <LineInfoDetail>
+          <LineInfoFont3>
+            05:20/06:00
+            <br />
+            (평일/주말)
+          </LineInfoFont3>
+          <LineInfoDivider />
+          <LineInfoFont4>
+            05:20/06:00
+            <br />
+            (평일/주말)
+          </LineInfoFont4>
+        </LineInfoDetail>
+        <LineInfoDetail>
+          <LineInfoFont3>
+            05:20/06:00
+            <br />
+            (평일/주말)
+          </LineInfoFont3>
+          <LineInfoDivider />
+          <LineInfoFont4>
+            05:20/06:00
+            <br />
+            (평일/주말)
+          </LineInfoFont4>
+        </LineInfoDetail>
+      </BottomContainer>
+    )}
 
-    <BottomContainer2>
-      <LineInfoDisplay>
-        <BottomText>노선</BottomText>
-      </LineInfoDisplay>
-      <LineInfoDisplay>
-        <BottomText>종착역</BottomText>
-      </LineInfoDisplay>
-      <LineInfoDisplay>
-        <BottomText>첫차</BottomText>
-      </LineInfoDisplay>
-      <LineInfoDisplay>
-        <BottomText>막차</BottomText>
-      </LineInfoDisplay>
-      <LineInfoDetail />
-      <LineInfoDetail />
-      <LineInfoDetail />
-      <LineInfoDetail />
-    </BottomContainer2>
+    {/* 주변지도 */}
+    {props.Active === '주변지도' && <MapContent></MapContent>}
   </>
 );
+
+// prop type 안맞으면 오류 나도록 지정
+DetailPresenter.propTypes = {
+  LineColor: PropTypes.string.isRequired,
+  LineNumber: PropTypes.string.isRequired,
+  Active: PropTypes.string.isRequired,
+  setActive: PropTypes.func.isRequired,
+};
 
 export default DetailPresenter;
