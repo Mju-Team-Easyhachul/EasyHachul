@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from './Logo';
 
-const HeaderContaienr = styled.div`
+const HeaderContainer = styled.div`
   position: sticky;
   top: 0;
   background-color: white;

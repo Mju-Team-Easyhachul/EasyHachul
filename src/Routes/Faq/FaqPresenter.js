@@ -9,6 +9,14 @@ const FaqBoardContainer = styled.div`
   padding-top: 0.1%;
   position: absolute;
   left: 28%;
+  @media screen and (max-width: 900px) {
+    height: 730px;
+    width: 375px;
+    position: absolute;
+    top:10.1%;
+    left: 0;
+
+  }
 `;
 
 const FaqBoard = styled.div`
@@ -18,6 +26,14 @@ const FaqBoard = styled.div`
   padding: 5.3% 10.9% 5.8% 3.9%;
   border-radius: 50px;
   background-color:#B6E6DB;
+  @media screen and (max-width: 900px) {
+    width: 374.6px;
+    height: 178px;
+    border-radius: 35px;
+    margin-bottom: 15%;
+    padding: 0 0;
+  }
+  
 `;
 
 const FaqText1 = styled.div`
@@ -26,12 +42,22 @@ const FaqText1 = styled.div`
   text-align: left;
   margin-bottom: 2%;
   line-height: 24px;
+  @media screen and (max-width: 900px) {
+    height: 8%;
+    font-size : 12px;
+    margin-left : 10%;
+    line-height: 30px;
+  }
 `;
 
 const FaqText2 = styled.div ` 
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 2%;
+  @media screen and (max-width: 900px) {
+    font-size : 10px;
+    margin-left : 10%;
+  }
 `;
 
 const FaqText3 = styled.div ` 
@@ -39,6 +65,13 @@ const FaqText3 = styled.div `
   height: 182px;
   font-size: 15px;
   line-height: 24px;
+  @media screen and (max-width: 900px) {
+    width: 287px;
+    height: 124px;
+    font-size : 10px;
+    margin-left : 11.7%;
+    line-height: 11px;
+  }
 `;
 
 const FaqTextline = styled.div `
