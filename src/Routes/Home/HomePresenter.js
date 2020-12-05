@@ -10,7 +10,7 @@ import BackgroundImage from "../../assets/homebackground.png";
 
 
 //EASY하철 전체
-const Titlecontainer = styled.div `
+const Titlecontainer = styled.div`
   padding: 9% 38% 0% 38%;
   display: flex;
   justify-content: center;
@@ -44,19 +44,19 @@ const Icon2 = styled.img.attrs({
 `;
 
 //로고 이미지
-const Logocontainer = styled.div `
+const Logocontainer = styled.div`
   margin-left: 2.3%;
   width: 67px;
   height: 67px;
   odjext-fit:contain;
   @media screen and (max-width: 900px) {
     width : 10.1%;
-    margin-right : 25%
+    margin-right : 35%
   }
 `;
 
 //EASY하철 텍스트
-const Title = styled.div `
+const Title = styled.div`
   width: 272px;
   height: 63px;
   font-size: 55px;
@@ -72,7 +72,7 @@ const Title = styled.div `
 `;
 
 //부가설명 문구 전체
-const TextContainer = styled.div `
+const TextContainer = styled.div`
   width: 538px;
   height: 80px;
   display : block;
@@ -85,7 +85,7 @@ const TextContainer = styled.div `
 `;
 
 //부가설명 텍스트
-const Text = styled.div `
+const Text = styled.div`
   text-align : center;
   line-height: 1.14;
   font-weight: 500;
@@ -217,16 +217,18 @@ const BackImage = styled.div`
   }
 `;
 
-const DownloadButtonContainer = styled.div `
+//노선로 보러가기 박스
+const DownloadButtonContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const DownloadButton = styled.div `
+//노선로 보러가기 버튼
+const DownloadButton = styled.div`
 width: 327px;
 height: 64px;
 border-radius: 4px;
-margin-top: 4%;
+margin-top: 15%;
 background-color: #7ad9c4;
 display : flex;
 @media screen and (max-width: 900px) {
@@ -237,12 +239,15 @@ display : flex;
 }
 `;
 
-const DownloadButtonText = styled.div `
+//노선로 보러가기 텍스트
+const DownloadButtonText = styled.div`
 width: 196px;
 height: 25px;
 font-size: 29px;
 text-align : center;
 margin: auto 0 auto 18%;
+color: black;
+
 @media screen and (max-width: 900px) {
   width: 113px;
   height: 40px;
@@ -252,7 +257,8 @@ margin: auto 0 auto 18%;
 }
 `;
 
-const DownloadArrow = styled.div `
+//노선로 보러가기 화살표
+const DownloadArrow = styled.div`
   width: 24px;
   height: 24px;
   margin: auto 9.1% auto 5.5%;
@@ -330,11 +336,13 @@ const HomePresenter = () => (
 
       </ButtonContainer>
       <DownloadButtonContainer>
+      <Link to="Faq" style={{ textDecoration: "none" }}>
         <DownloadButton>
-        <DownloadButtonText>노선도보러가기</DownloadButtonText>
-        <DownloadArrow><Icon3></Icon3></DownloadArrow>
+          <DownloadButtonText>노선도보러가기</DownloadButtonText>
+          <DownloadArrow><Icon3></Icon3></DownloadArrow>
         </DownloadButton>
-        </DownloadButtonContainer>
+        </Link>
+      </DownloadButtonContainer>
     </BackImage>
 
   </>
