@@ -789,8 +789,7 @@ export default class extends React.Component {
           }
         }
 
-        for(var v in map[preStationIndex][1]){ //이차원배열까지 하면 B,20 C,20 을 저장하고 있겠지 array 두개를 가지고 있다고 하겠지.
-          //console.log(mapp[preStationIndex][1][v][0]); // B, C 로 나옴
+        for(var v in map[preStationIndex][1]){ 
           if(map[preStationIndex][1][v][0] == afterStation){
             cost += map[preStationIndex][1][v][1];
             DistanceCost += mapDistance[preStationIndex][1][v][1];
@@ -815,8 +814,7 @@ export default class extends React.Component {
           }
         }
 
-        for(var k in mapDistance[preStationIndex][1]){ //이차원배열까지 하면 B,20 C,20 을 저장하고 있겠지 array 두개를 가지고 있다고 하겠지.
-          //console.log(mapp[preStationIndex][1][v][0]); // B, C 로 나옴
+        for(var k in mapDistance[preStationIndex][1]){
           if(mapDistance[preStationIndex][1][k][0] == afterStation){
             cost += map[preStationIndex][1][k][1];
             DistanceCost += mapDistance[preStationIndex][1][k][1];
@@ -841,8 +839,7 @@ export default class extends React.Component {
           }
         }
 
-        for(var p in mapMoney[preStationIndex][1]){ //이차원배열까지 하면 B,20 C,20 을 저장하고 있겠지 array 두개를 가지고 있다고 하겠지.
-          //console.log(mapp[preStationIndex][1][v][0]); // B, C 로 나옴
+        for(var p in mapMoney[preStationIndex][1]){
           if(mapMoney[preStationIndex][1][p][0] == afterStation){
             cost += map[preStationIndex][1][p][1];
             DistanceCost += mapDistance[preStationIndex][1][p][1];
@@ -857,17 +854,23 @@ export default class extends React.Component {
       console.log(MoneyCost);
     }
 
-    //여기서 DijkstrArrivalTime 에 들어갈 시간을 계산해야 한다.
-    //SearchDepartureTime 이 "12:00" 형태. 앞의 두글자와 뒤의 두 글자를 떼서 int형으로 변환하다
-    //DijkstraMinute만큼을 뒤의 두 글자에 더한다 . 60을 넘어가면 DijkstraMinute에서 60을 빼고 앞의 두글자를 1 올려준다
-    //실제 DijkstraMinute를 사용하면 결과값이 변하므로 임시변수로 사용한다.
     var timeSplit = this.state.SearchDepartureTime.split(':');
     timeSplit[0] *= 1;
     timeSplit[1] *= 1;
     for(var q = 0; q < parseInt(cost/3600); q++){
       timeSplit[0] += 1;
+      if(timeSplit[0] === 24){
+        timeSplit[0] = 0;
+      }
     }
-    timeSplit[1] += parseInt(cost/60) % 60; 
+    timeSplit[1] += parseInt(cost/60) % 60;
+    if(timeSplit[1] >= 60){
+      timeSplit[0] += 1;
+      if(timeSplit[0] === 24){
+        timeSplit[0] = 0;
+      }
+      timeSplit[1] -= 60;
+    } 
 
     timeSplit[0] += "";
     timeSplit[1] += "";
