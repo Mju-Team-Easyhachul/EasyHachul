@@ -19,7 +19,7 @@ const LineNumber = styled.div`
   width: 20%;
   height: 100%;
   margin: 0 0 0 40%;
-  border: 2px solid #18a51f;
+  border: 2px solid;
   background: white;
   border-radius: 30px;
 `;
@@ -249,6 +249,11 @@ DetailPresenter.propTypes = {
   LineLastNumber2: PropTypes.string.isRequired,
   Active: PropTypes.string.isRequired,
   setActive: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      nodeId: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 export default DetailPresenter;
