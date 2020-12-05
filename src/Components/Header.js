@@ -10,7 +10,7 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-
+  z-index: 100;
   border-bottom: solid 1px grey;
   @media (max-width: 900px) {
     height: 50px;
