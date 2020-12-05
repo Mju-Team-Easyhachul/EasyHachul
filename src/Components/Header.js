@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from './Logo';
 
-const HeaderContaienr = styled.div`
+const HeaderContainer = styled.div`
   position: sticky;
   top: 0;
   background-color: white;
@@ -11,7 +11,7 @@ const HeaderContaienr = styled.div`
   flex-direction: row;
   justify-content: center;
   border-bottom: solid 0.3px grey;
-@media (max-width: 900px) {
+  @media (max-width: 900px) {
     height: 40px;
   }
 `;
