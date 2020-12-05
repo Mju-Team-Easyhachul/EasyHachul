@@ -31,7 +31,7 @@ const FaqBoard1 = styled.div`
   background-color: #b6e6db;
   @media screen and (max-width: 900px) {
     width: 374.6px;
-    height: 40%;
+    height: 35%;
     border-radius: 35px;
     margin-bottom: 15%;
     padding: 0 0;
@@ -48,7 +48,7 @@ const FaqBoard2 = styled.div`
   background-color:#B6E6DB;
   @media screen and (max-width: 900px) {
     width: 374.6px;
-    height: 52%;
+    height: 51%;
     border-radius: 35px;
     margin-bottom: 15%;
     padding: 0 0;
