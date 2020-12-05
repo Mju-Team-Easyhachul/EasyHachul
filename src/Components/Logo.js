@@ -7,8 +7,8 @@ const RestIcon = styled.img.attrs({
   src: logoPath,
 })`
   @media (max-width: 900px) {
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
   }
   width: ${props => props.width};
   height: ${props => props.height};
