@@ -8,7 +8,7 @@ const Container = styled.div`
   }
 `;
 const FooterContainer = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
