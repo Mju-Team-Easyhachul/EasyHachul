@@ -26,10 +26,10 @@ const SearchTab = styled.div`
   font-size: 30px;
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 160px;
-    height: 50px;
-    line-height: 50px;
-    font-size: 22px;
+    width: 34%;
+    height: 100%;
+    line-height: 230%;
+    font-size: 135%;
   }
 `;
 
@@ -44,10 +44,10 @@ const ActiveSearchTab = styled.div`
   font-size: 30px;
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 160px;
-    height: 50px;
-    line-height: 50px;
-    font-size: 22px;
+    width: 34%;
+    height: 100%;
+    line-height: 230%;
+    font-size: 135%;
   }
 `;
 
@@ -59,7 +59,7 @@ const SearchPanel = styled.div`
   padding: 8px;
 
   @media (min-width: 320px) and (max-width: 480px){
-    height: 180px;
+    height: 23%;
   }
 `;
 
@@ -69,8 +69,8 @@ const SearchImg = styled.img`
   vertical-align: middle;
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 28px;
-    height: 28px;
+    width: 8%;
+    height: 8%;
   }
 `;
 
@@ -95,8 +95,9 @@ const SearchInput = styled.input`
   }
 
   @media (min-width: 320px) and (max-width: 480px){
+    -webkit-appearance: none;
     width: 70%;
-    height: 40px;
+    height: 40%;
   }
 `;
 const Container = styled.div`
@@ -119,7 +120,7 @@ const SearchResult = styled.div`
 
   @media (min-width: 320px) and (max-width: 480px){
     width: 100%;
-    height: 20%;
+    height: 40%;
   }
 `;
 
@@ -129,8 +130,8 @@ const SearchFont1 = styled.p`
   text-align: center;
 
   @media (min-width: 320px) and (max-width: 480px){
-    font-size: 22px;
-    margin: 20px;
+    font-size: 150%;
+    margin: 5%;
   }
 `;
 
@@ -140,8 +141,8 @@ const SearchFont2 = styled.p`
   text-align: center;
 
   @media (min-width: 320px) and (max-width: 480px){
-    font-size: 22px;
-    margin: 20px;
+    font-size: 130%;
+    margin: 5%;
   }
 `;
 
@@ -153,8 +154,8 @@ const SearchResultMap = styled.div`
   text-align: center;
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 375px;
-    height: 60px;
+    width: 80%;
+    height: 100%;
   }
 `;
 
@@ -169,11 +170,11 @@ const SearchShareButton = styled.div`
   line-height: 70px;
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 207px;
-    height: 50px;
+    width: 50%;
+    height: 15%;
     border-radius: 16px;
-    margin: 10px auto;
-    line-height: 50px;
+    margin: 5% auto;
+    line-height: 320%;
   }
 `;
 
@@ -190,9 +191,9 @@ const SharePanel = styled.div`
 
   @media (min-width: 320px) and (max-width: 480px){
     width: 90%;
-    height: 42%;
+    height: 50%;
     border-radius: 44px;
-    margin: 100px auto;
+    margin: 25% auto;
   }
 `;
 
@@ -205,7 +206,7 @@ const ShareInput = styled.input`
 
   @media (min-width: 320px) and (max-width: 480px){
     width: 80%;
-    height: 40px;
+    height: 10%;
   }
 `;
 
@@ -220,13 +221,14 @@ const ShareButton = styled.div`
   margin: 60px auto;
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 134px;
-    height: 46px;
+    -webkit-appearance: none;
+    width: 40%;
+    height: 11%;
     border-radius: 16px;
     border: solid 2px #84e0cb;
     font-weight: bold;
-    line-height: 50px;
-    margin: 30px auto;
+    line-height: 300%;
+    margin: 10% auto;
   }
 `;
 
@@ -253,9 +255,9 @@ const CancelImg = styled.img`
   height: 20px;
 
   @media (min-width: 320px) and (max-width: 480px){
-    margin-top: 23px;
-    width: 14px;
-    height: 14px;
+    margin-top: 6%;
+    width: 4%;
+    height: 4%;
   }
 `;
 
@@ -334,8 +336,8 @@ const SearchPresenter = (props) => (
         <SearchFont2>
           {props.SearchDepartureStation} → {props.SearchArrivalStation}
         </SearchFont2>
-        <SearchFont2>~~분, ~~개 정류장 이동</SearchFont2>
-        <SearchFont2>~~시, ~~분 도착예정</SearchFont2>
+        <SearchFont2>{props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동</SearchFont2>
+        <SearchFont2>{props.DijkstraArrivalTime} 도착예정</SearchFont2>
         <ShareInput placeholder="이메일 입력"></ShareInput>
         <ShareButton>이메일 보내기</ShareButton>
       </SharePanel>
@@ -348,8 +350,10 @@ const SearchPresenter = (props) => (
           <SearchFont2>
             {props.SearchDepartureStation} → {props.SearchArrivalStation}
           </SearchFont2>
-          <SearchFont2>~~분, ~~개 정류장 이동</SearchFont2>
-          <SearchFont2>~~시, ~~분 도착예정</SearchFont2>
+          <SearchFont2>{props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동</SearchFont2>
+          <SearchFont2>{props.DijkstraDistance}M</SearchFont2>
+          <SearchFont2>{props.DijkstraMoney}원</SearchFont2>
+          <SearchFont2>{props.DijkstraArrivalTime} 도착예정</SearchFont2>
           <SearchShareButton onClick={() => props.setActiveShare()}>
             도착시간 공유
           </SearchShareButton>
@@ -387,6 +391,12 @@ SearchPresenter.propTypes = {
   SearchResult: PropTypes.bool.isRequired,
   Share: PropTypes.bool.isRequired,
   SearchList: PropTypes.array.isRequired,
+  DijkstraMinute: PropTypes.string.isRequired,
+  DijkstraSecond: PropTypes.string.isRequired,
+  DijkstraStationNum: PropTypes.number.isRequired,
+  DijkstraArrivalTime: PropTypes.string.isRequired,
+  DijkstraDistance: PropTypes.number.isRequired,
+  DijkstraMoney: PropTypes.number.isRequired,
 
   setActiveTab: PropTypes.func.isRequired,
   setDepartureTime: PropTypes.func.isRequired,

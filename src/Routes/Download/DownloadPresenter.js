@@ -1,8 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import Helmet from "react-helmet";
-import { Link } from "react-router-dom";
-import Header from "../../Components/Header";
+import React from 'react';
+import styled from 'styled-components';
+import Helmet from 'react-helmet';
+import { Link } from 'react-router-dom';
+import Header from '../../Components/Header';
+import Footer from '../../Components/Footer';
 
 const DownloadHeader = styled.div`
   background-color: #84e0cb;
@@ -22,6 +23,10 @@ const DownloadPanel = styled.div`
   margin-top: 5%;
   display: flex;
   flex-direction: column;
+  @media (min-width: 320px) and (max-width: 480px) {
+    width: 100%;
+    margin-top: 0;
+  }
 `;
 
 const DownloadTextContainer = styled.div`
@@ -46,12 +51,15 @@ const ButtonContainer = styled.div`
 `;
 
 const ButtonText = styled.div`
-  font-size: 15px;
+  font-size: 30px;
   margin-bottom: 10%;
+  @media (min-width: 320px) and (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
 
 const Button = styled.div`
-  width: 80%;
+  width: 40%;
   margin: 0 auto;
   background-color: #7ad9c4;
   text-align: center;
@@ -75,18 +83,18 @@ const DownloadPresenter = () => (
     <DownloadPanel>
       <DownloadTextContainer>
         <DownloadText1>Download the latest version</DownloadText1>
-        <DownloadText2>Version 1 파일 크기 : 0KB</DownloadText2>
-        <DownloadText3>Release data December 5, 2020</DownloadText3>
+        <DownloadText2>노선도 파일 크기 : 70KB</DownloadText2>
+        <DownloadText3>Release data December 7, 2020</DownloadText3>
       </DownloadTextContainer>
       <ButtonContainer>
-        <ButtonText>
-          아래의 버튼을 눌러 지하철 노선도 이미지를 다운로드
-        </ButtonText>
-        <Link to="Home" style={{ textDecoration: "none" }}>
+        <ButtonText>아래의 버튼을 눌러 지하철 노선도 이미지를 다운로드</ButtonText>
+
+        <a style={{ textDecoration: 'none' }} href={process.env.PUBLIC_URL + '/files/myFile.png'} download>
           <Button>→</Button>
-        </Link>
+        </a>
       </ButtonContainer>
     </DownloadPanel>
+    <Footer></Footer>
   </>
 );
 

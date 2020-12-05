@@ -10,9 +10,12 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  border-bottom: solid 0.3px grey;
+  z-index: 100;
+  border-bottom: solid 1px grey;
   @media (max-width: 900px) {
-    height: 40px;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 3%;
   }
 `;
 
@@ -25,7 +28,7 @@ const LogoContainer = styled.div`
 
 const HeaderText = styled.div`
   @media (max-width: 900px) {
-    font-size: 20px;
+    font-size: 25px;
     line-height: 50px;
   }
   color: #84e0cb;
