@@ -1,20 +1,36 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import Logo from "./Logo";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import Logo from './Logo';
 
-const HeaderContaienr = styled.div`
+const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  border-bottom: solid 0.3px grey;
+  z-index: 100;
+  border-bottom: solid 1px grey;
+  @media (max-width: 900px) {
+    height: 50px;
+    line-height: 50px;
+    margin-top: 3%;
+  }
 `;
 
 const LogoContainer = styled.div`
+  @media (max-width: 900px) {
+    height: 50px;
+  }
   height: 70px;
 `;
 
 const HeaderText = styled.div`
+  @media (max-width: 900px) {
+    font-size: 25px;
+    line-height: 50px;
+  }
   color: #84e0cb;
   line-height: 70px;
   margin-left: 2%;
@@ -29,14 +45,14 @@ class Header extends Component {
 
   render() {
     return (
-      <HeaderContaienr>
+      <HeaderContainer>
         <Link to="Home">
           <LogoContainer>
             <Logo width="65px" height="65px" />
           </LogoContainer>
         </Link>
         <HeaderText>EASY하철</HeaderText>
-      </HeaderContaienr>
+      </HeaderContainer>
     );
   }
 }
