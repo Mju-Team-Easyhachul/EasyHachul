@@ -12,7 +12,7 @@ const FooterContainer = styled.div`
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 80px;
+  height: 60px;
   padding: 15px;
   background-color: #2d4b5a;
   @media (min-width: 320px) and (max-width: 480px) {
