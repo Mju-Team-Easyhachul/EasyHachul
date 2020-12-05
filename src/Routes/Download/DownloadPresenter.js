@@ -51,12 +51,15 @@ const ButtonContainer = styled.div`
 `;
 
 const ButtonText = styled.div`
-  font-size: 15px;
+  font-size: 30px;
   margin-bottom: 10%;
+  @media (min-width: 320px) and (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
 
 const Button = styled.div`
-  width: 80%;
+  width: 40%;
   margin: 0 auto;
   background-color: #7ad9c4;
   text-align: center;
