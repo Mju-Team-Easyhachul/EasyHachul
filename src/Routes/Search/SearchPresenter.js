@@ -334,8 +334,8 @@ const SearchPresenter = (props) => (
         <SearchFont2>
           {props.SearchDepartureStation} → {props.SearchArrivalStation}
         </SearchFont2>
-        <SearchFont2>~~분, ~~개 정류장 이동</SearchFont2>
-        <SearchFont2>~~시, ~~분 도착예정</SearchFont2>
+        <SearchFont2>{props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동</SearchFont2>
+        <SearchFont2>{props.DijkstraArrivalTime} 도착예정</SearchFont2>
         <ShareInput placeholder="이메일 입력"></ShareInput>
         <ShareButton>이메일 보내기</ShareButton>
       </SharePanel>
@@ -348,8 +348,10 @@ const SearchPresenter = (props) => (
           <SearchFont2>
             {props.SearchDepartureStation} → {props.SearchArrivalStation}
           </SearchFont2>
-          <SearchFont2>~~분, ~~개 정류장 이동</SearchFont2>
-          <SearchFont2>~~시, ~~분 도착예정</SearchFont2>
+          <SearchFont2>{props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동</SearchFont2>
+          <SearchFont2>{props.DijkstraDistance}M</SearchFont2>
+          <SearchFont2>{props.DijkstraMoney}원</SearchFont2>
+          <SearchFont2>{props.DijkstraArrivalTime} 도착예정</SearchFont2>
           <SearchShareButton onClick={() => props.setActiveShare()}>
             도착시간 공유
           </SearchShareButton>
@@ -387,6 +389,12 @@ SearchPresenter.propTypes = {
   SearchResult: PropTypes.bool.isRequired,
   Share: PropTypes.bool.isRequired,
   SearchList: PropTypes.array.isRequired,
+  DijkstraMinute: PropTypes.string.isRequired,
+  DijkstraSecond: PropTypes.string.isRequired,
+  DijkstraStationNum: PropTypes.number.isRequired,
+  DijkstraArrivalTime: PropTypes.string.isRequired,
+  DijkstraDistance: PropTypes.number.isRequired,
+  DijkstraMoney: PropTypes.number.isRequired,
 
   setActiveTab: PropTypes.func.isRequired,
   setDepartureTime: PropTypes.func.isRequired,
