@@ -88,13 +88,13 @@ const InfoButton = styled.button`
   height: 10%;
   background: #303747;
   font-size: 35px;
-  ${'' /* border-radius: 20px 20px 20px 20px; */}
   color: white;
 `;
 const LineInfoDetail = styled.div`
   @media (max-width: 900px) {
-    height: 30%;
+    height: 20%;
     width: 24.8%;
+    border-radius: 0px;
   }
   background-color: #ffffff;
   margin-top: 1%;
@@ -107,45 +107,49 @@ const LineInfoDetail = styled.div`
   border-radius: 30px;
 `;
 const LineInfoDivider = styled.hr`
+  @media (max-width: 900px) {
+    border: 0;
+  }
+  align: center;
   border: 1px solid #717171;
 `;
-const LineInfoFont1 = styled.h2`
+const LineInfoFont1 = styled.h1`
   @media (max-width: 900px) {
-    font-size: 22.5px;
-    margin-bottom: 20%;
+    font-size: 24px;
+    margin-top: 40%;
   }
   text-align: center;
-  font-size: 35.61px;
-  margin-top: 24%;
-  margin-bottom: 24%;
+  font-size: 23.74px;
+  margin-top: 30%;
+  margin-bottom: 30%;
 `;
-const LineInfoFont2 = styled.h2`
+const LineInfoFont2 = styled.h1`
   @media (max-width: 900px) {
-    font-size: 22.5px;
+    font-size: 24px;
     margin-top: 20%;
   }
   text-align: center;
-  font-size: 35.61px;
-  margin-top: 30%;
+  font-size: 23.74px;
+  margin-top: 28%;
 `;
 const LineInfoFont3 = styled.h1`
   @media (max-width: 900px) {
-    font-size: 15px;
-    margin-top: 20%;
+    font-size: 11px;
+    margin-top: 40%;
   }
   text-align: center;
   font-size: 23.74px;
-  margin-top: 23%;
-  margin-bottom: 22%;
+  margin-top: 30%;
+  margin-bottom: 30%;
 `;
-const LineInfoFont4 = styled.h2`
+const LineInfoFont4 = styled.h1`
   @media (max-width: 900px) {
-    font-size: 15px;
+    font-size: 11px;
     margin-top: 20%;
   }
   text-align: center;
   font-size: 23.74px;
-  margin-top: 25%;
+  margin-top: 28%;
 `;
 
 const DetailPresenter = props => (
@@ -215,35 +219,19 @@ const DetailPresenter = props => (
           <LineInfoFont2>외선</LineInfoFont2>
         </LineInfoDetail>
         <LineInfoDetail>
-          <LineInfoFont1>123</LineInfoFont1>
+          <LineInfoFont1>{props.LineLastNumber1}</LineInfoFont1>
           <LineInfoDivider />
-          <LineInfoFont2>102</LineInfoFont2>
+          <LineInfoFont2>{props.LineLastNumber2}</LineInfoFont2>
         </LineInfoDetail>
         <LineInfoDetail>
-          <LineInfoFont3>
-            05:20/06:00
-            <br />
-            (평일/주말)
-          </LineInfoFont3>
+          <LineInfoFont3>(평일)05:20 (주말)06:00</LineInfoFont3>
           <LineInfoDivider />
-          <LineInfoFont4>
-            05:20/06:00
-            <br />
-            (평일/주말)
-          </LineInfoFont4>
+          <LineInfoFont4>(평일)05:20 (주말)06:00</LineInfoFont4>
         </LineInfoDetail>
         <LineInfoDetail>
-          <LineInfoFont3>
-            05:20/06:00
-            <br />
-            (평일/주말)
-          </LineInfoFont3>
+          <LineInfoFont3>(평일)24:20 (주말)23:30</LineInfoFont3>
           <LineInfoDivider />
-          <LineInfoFont4>
-            05:20/06:00
-            <br />
-            (평일/주말)
-          </LineInfoFont4>
+          <LineInfoFont4>(평일)24:20 (주말)23:30</LineInfoFont4>
         </LineInfoDetail>
       </BottomContainer>
     )}
@@ -257,6 +245,8 @@ const DetailPresenter = props => (
 DetailPresenter.propTypes = {
   LineColor: PropTypes.string.isRequired,
   LineNumber: PropTypes.string.isRequired,
+  LineLastNumber1: PropTypes.string.isRequired,
+  LineLastNumber2: PropTypes.string.isRequired,
   Active: PropTypes.string.isRequired,
   setActive: PropTypes.func.isRequired,
 };
