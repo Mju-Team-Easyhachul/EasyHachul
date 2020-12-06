@@ -3,13 +3,10 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
 import Header from "../../Components/Header";
-import Clock from "../../assets/Clock.png";
 import Cancel from "../../assets/Cancel.png";
 import CancelRed from "../../assets/CancelRed.png"
 import UpDownArrow from "../../assets/Up Down arrow.png";
-import Search from "../../assets/Search.png";
 import Space1 from "../../assets/Space1.png";
-import Space2 from "../../assets/Space2.png";
 
 const SearchHeader = styled.div`
   display: flex;
@@ -59,25 +56,90 @@ const SearchPanel = styled.div`
   padding: 8px;
 
   @media (min-width: 320px) and (max-width: 480px){
-    height: 23%;
+    height: 30%;
   }
 `;
 
-const SearchList = styled.div``;
+const SearchList = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const SearchImg = styled.img`
-  vertical-align: middle;
+const SearchTimeFont = styled.div`
+  width: 45px;
+  height: 35px;
+  line-height: 33px;
+  color: #303747;
+  margin-top: -30px;
+  font-size: 23px;
 
   @media (min-width: 320px) and (max-width: 480px){
-    width: 8%;
-    height: 8%;
+    font-size: 18px;
+  }
+`;
+
+const SearchCancelImg = styled.img`
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 10%;
+    height: 10%;
+  }
+`;
+
+const SearchChangeImg = styled.img`
+  vertical-align: middle;
+  width: 45px;
+  height: 45px;
+  color: #303747;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 10%;
+    height: 10%;
+  }
+`;
+
+const SearchSpaceImg = styled.img`
+  vertical-align: middle;
+  width: 45px;
+  height: 40px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    width: 12%;
+    height: 12%;
+  }
+`;
+
+const SearchButton = styled.div`
+  vertical-align: middle;
+  width: 45px;
+  height: 35px;
+  border-radius: 16px;
+  border: solid 2px #303747;
+  text-align: center;
+  line-height: 37px;
+  color: #303747;
+  margin-top: 0px;
+
+  @media (min-width: 320px) and (max-width: 480px){
+    -webkit-appearance: none;
+    width: 13%;
+    height: 5%;
+    border-radius: 16px;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 300%;
+    margin: 0% auto;
   }
 `;
 
 const SearchInput = styled.input`
   width: 664px;
   height: 60px;
-  color: white;
+  color: #303747;
   font-size: 27px;
   background-color: #84e0cb;
   border-radius: 10px;
@@ -152,8 +214,10 @@ const SearchResultMap = styled.div`
   margin: 50px;
   font-size: 50px;
   text-align: center;
+  border: solid 2px #000000;
 
   @media (min-width: 320px) and (max-width: 480px){
+    margin: 10%;
     width: 80%;
     height: 100%;
   }
@@ -240,7 +304,7 @@ const RecentlySearch = styled.div`
 
   @media (min-width: 320px) and (max-width: 480px){
     width: 100%;
-    height: 20%;
+    height: 30%;
   }
 `;
 
@@ -302,32 +366,37 @@ const SearchPresenter = (props) => (
     {props.Share === false ? (
       <SearchPanel>
         <SearchList>
-          <SearchImg src={Clock} />
+          <SearchTimeFont>출발시간</SearchTimeFont>
+          {/* <SearchImg src={Clock} /> */}
           <SearchInput
            type="time" 
-           placeholder="출발시간 설정"
+           placeholder="출발시간을 입력해 주세요."
            value={props.DepartureTime}
            onChange={props.setDepartureTime}
            ></SearchInput>
-          <SearchImg src={Search} onClick={props.setActiveSearchResult} />
+          <SearchSpaceImg src={Space1} />
         </SearchList>
         <SearchList>
-          <SearchImg src={Cancel} />
+          <SearchCancelImg src={Cancel} onClick={() => props.deleteDepArrStation()}/>
           <SearchInput
             placeholder="출발지 검색"
             value={props.DepartureStation}
             onChange={props.setDepartureStation}
+            onKeyPress={props.pressEnter}
           ></SearchInput>
-          <SearchImg src={Space1} />
+          <SearchSpaceImg src={Space1} />
         </SearchList>
         <SearchList>
-          <SearchImg src={UpDownArrow} />
+          <SearchChangeImg src={UpDownArrow} onClick={() => props.changeDepArrStation()}/>
           <SearchInput
             placeholder="도착지 검색"
             value={props.ArrivalStation}
             onChange={props.setArrivalStation}
+            onKeyPress={props.pressEnter}
           ></SearchInput>
-          <SearchImg src={Space2} />
+          <SearchButton 
+            onClick={props.setActiveSearchResult}
+          >검색</SearchButton>
         </SearchList>
       </SearchPanel>
     ) : (
@@ -373,6 +442,8 @@ const SearchPresenter = (props) => (
               </RecentlySearchList>
             ))}
           </RecentlySearch>
+
+          <SearchResultMap>지하철 노선도가 들어갈 자리</SearchResultMap>
         </Container>
       ) : (
         <Container></Container>
@@ -402,7 +473,10 @@ SearchPresenter.propTypes = {
   setDepartureTime: PropTypes.func.isRequired,
   setDepartureStation: PropTypes.func.isRequired,
   setArrivalStation: PropTypes.func.isRequired,
+  deleteDepArrStation: PropTypes.func.isRequired,
+  changeDepArrStation: PropTypes.func.isRequired,
   setActiveSearchResult: PropTypes.func.isRequired,
+  pressEnter: PropTypes.func.isRequired,
   setActiveShare: PropTypes.func.isRequired,
   saveSearchList: PropTypes.func.isRequired,
   deleteSearchList: PropTypes.func.isRequired,
