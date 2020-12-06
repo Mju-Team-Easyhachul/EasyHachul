@@ -1,280 +1,271 @@
-import React from "react";
-import { generatePath } from "react-router";
-import SearchPresenter from "./SearchPresenter";
+import React from 'react';
+import { generatePath } from 'react-router';
+import SearchPresenter from './SearchPresenter';
+import * as emailjs from 'emailjs-com';
 
 var Dijkstras = (function () {
   var Dijkstras = function () {
-      this.graph = [];
-      this.queue;
-      this.distance = [];
-      this.previous = []
-  }
+    this.graph = [];
+    this.queue;
+    this.distance = [];
+    this.previous = [];
+  };
 
-  Dijkstras.prototype.setGraph = function (graph)
-  {
-      // Error check graph
-      if (typeof graph !== 'object') {
-          throw "graph isn't an object (" + typeof graph + ")";
+  Dijkstras.prototype.setGraph = function (graph) {
+    // Error check graph
+    if (typeof graph !== 'object') {
+      throw "graph isn't an object (" + typeof graph + ')';
+    }
+
+    if (graph.length < 1) {
+      throw 'graph is empty';
+    }
+
+    for (var index in graph) {
+      // Error check each node
+      var node = graph[index];
+      if (typeof node !== 'object' || node.length !== 2) {
+        throw 'node must be an array and contain 2 values (name, vertices). Failed at index: ' + index;
       }
 
-      if (graph.length < 1) {
-          throw "graph is empty";
+      var nodeName = node[0];
+      var vertices = node[1];
+      this.graph[nodeName] = [];
+
+      for (var v in vertices) {
+        // Error check each node
+        var vertex = vertices[v];
+        if (typeof vertex !== 'object' || vertex.length !== 2) {
+          throw (
+            'vertex must be an array and contain 2 values (name, vertices). Failed at index: ' + index + '[' + v + ']'
+          );
+        }
+        var vertexName = vertex[0];
+        var vertexCost = vertex[1];
+        this.graph[nodeName][vertexName] = vertexCost;
       }
+    }
+  };
 
-      for (var index in graph) {
-          // Error check each node
-          var node = graph[index];
-          if (typeof node !== 'object' || node.length !== 2) {
-              throw "node must be an array and contain 2 values (name, vertices). Failed at index: " + index;
-          }
+  Dijkstras.prototype.getPath = function (source, target) {
+    // Check source and target exist
+    if (typeof this.graph[source] === 'undefined') {
+      throw 'source ' + source + " doesn't exist";
+    }
+    if (typeof this.graph[target] === 'undefined') {
+      throw 'target ' + target + " doesn't exist";
+    }
 
-          var nodeName = node[0];
-          var vertices = node[1];
-          this.graph[nodeName] = [];
-
-          for (var v in vertices) {
-              // Error check each node
-              var vertex = vertices[v];
-              if (typeof vertex !== 'object' || vertex.length !== 2) {
-                  throw "vertex must be an array and contain 2 values (name, vertices). Failed at index: " + index + "[" + v + "]" ;
-              }
-              var vertexName = vertex[0];
-              var vertexCost = vertex[1];
-              this.graph[nodeName][vertexName] = vertexCost;
-          }
-      }
-  }
-
-  Dijkstras.prototype.getPath = function (source, target)
-  {
-      // Check source and target exist
-      if (typeof this.graph[source] === 'undefined') {
-          throw "source " + source + " doesn't exist";
-      }
-      if (typeof this.graph[target] === 'undefined') {
-          throw "target " + target + " doesn't exist";
-      }
-
-      // Already at target
-      if (source === target) {
-          return [];
-      }
-
-      // Reset all previous values
-      this.queue = new MinHeap();
-      this.queue.add(source, 0);
-      this.previous[source] = null;
-
-      // Loop all nodes
-      var u = null
-      while ((u = this.queue.shift())) {
-          // Reached taget!
-          if (u === target) {
-              var path = [];
-              while (this.previous[u] != null) {
-                  path.unshift(u);
-                  u = this.previous[u];
-              }
-              return path;
-          }
-
-          // all remaining vertices are inaccessible from source
-          if (this.queue.getDistance(u) == Infinity) {
-              return [];
-          }
-
-          var uDistance = this.queue.getDistance(u)
-          for (var neighbour in this.graph[u]) {
-              var nDistance = this.queue.getDistance(neighbour),
-                  aDistance = uDistance + this.graph[u][neighbour];
-
-              if (aDistance < nDistance) {
-                  this.queue.update(neighbour, aDistance);
-                  this.previous[neighbour] = u;
-              }
-          }
-      }
-
+    // Already at target
+    if (source === target) {
       return [];
-  }
+    }
 
+    // Reset all previous values
+    this.queue = new MinHeap();
+    this.queue.add(source, 0);
+    this.previous[source] = null;
 
+    // Loop all nodes
+    var u = null;
+    while ((u = this.queue.shift())) {
+      // Reached taget!
+      if (u === target) {
+        var path = [];
+        while (this.previous[u] != null) {
+          path.unshift(u);
+          u = this.previous[u];
+        }
+        return path;
+      }
+
+      // all remaining vertices are inaccessible from source
+      if (this.queue.getDistance(u) == Infinity) {
+        return [];
+      }
+
+      var uDistance = this.queue.getDistance(u);
+      for (var neighbour in this.graph[u]) {
+        var nDistance = this.queue.getDistance(neighbour),
+          aDistance = uDistance + this.graph[u][neighbour];
+
+        if (aDistance < nDistance) {
+          this.queue.update(neighbour, aDistance);
+          this.previous[neighbour] = u;
+        }
+      }
+    }
+
+    return [];
+  };
 
   // Fibonacci Heap (min first)
-  var MinHeap = (function() {
-      var MinHeap = function () {
-          this.min = null;
-          this.roots = [];
-          this.nodes = [];
+  var MinHeap = (function () {
+    var MinHeap = function () {
+      this.min = null;
+      this.roots = [];
+      this.nodes = [];
+    };
+
+    MinHeap.prototype.shift = function () {
+      var minNode = this.min;
+
+      // Current min is null or no more after it
+      if (minNode == null || this.roots.length < 1) {
+        this.min = null;
+        return minNode;
       }
 
-      MinHeap.prototype.shift = function()
-      {
-          var minNode = this.min;
+      // Remove it
+      this.remove(minNode);
 
-          // Current min is null or no more after it
-          if (minNode == null || this.roots.length < 1) {
-              this.min = null;
-              return minNode
-          }
-
-          // Remove it
-          this.remove(minNode);
-
-          // Consolidate
-          if (this.roots.length > 50) {
-              this.consolidate();
-          }
-
-          // Get next min
-          var lowestDistance = Infinity,
-              length = this.roots.length;
-
-          for (var i = 0; i < length; i++) {
-              var node = this.roots[i],
-                  distance = this.getDistance(node);
-
-              if (distance < lowestDistance) {
-                  lowestDistance = distance;
-                  this.min = node;
-              }
-          }
-
-          return minNode;
+      // Consolidate
+      if (this.roots.length > 50) {
+        this.consolidate();
       }
 
-      MinHeap.prototype.consolidate = function()
-      {
-          // Consolidate
-          var depths = [ [], [], [], [], [], [], [] ],
-              maxDepth = depths.length - 1, // 0-index
-              removeFromRoots = [];
+      // Get next min
+      var lowestDistance = Infinity,
+        length = this.roots.length;
 
-          // Populate depths array
-          var length = this.roots.length;
-          for (var i = 0; i < length; i++) {
-            var node = this.roots[i],
-            depthss = this.nodes[node].depth;
+      for (var i = 0; i < length; i++) {
+        var node = this.roots[i],
+          distance = this.getDistance(node);
 
-            if (depthss < maxDepth) {
-                depths[depthss].push(node);
+        if (distance < lowestDistance) {
+          lowestDistance = distance;
+          this.min = node;
+        }
+      }
+
+      return minNode;
+    };
+
+    MinHeap.prototype.consolidate = function () {
+      // Consolidate
+      var depths = [[], [], [], [], [], [], []],
+        maxDepth = depths.length - 1, // 0-index
+        removeFromRoots = [];
+
+      // Populate depths array
+      var length = this.roots.length;
+      for (var i = 0; i < length; i++) {
+        var node = this.roots[i],
+          depthss = this.nodes[node].depth;
+
+        if (depthss < maxDepth) {
+          depths[depthss].push(node);
+        }
+      }
+
+      // Consolidate
+      for (var depth = 0; depth <= maxDepth; depth++) {
+        while (depths[depth].length > 1) {
+          var first = depths[depth].shift(),
+            second = depths[depth].shift(),
+            newDepth = depth + 1,
+            pos = -1;
+
+          if (this.nodes[first].distance < this.nodes[second].distance) {
+            this.nodes[first].depth = newDepth;
+            this.nodes[first].children.push(second);
+            this.nodes[second].parent = first;
+
+            if (newDepth <= maxDepth) {
+              depths[newDepth].push(first);
             }
-          }
 
-          // Consolidate
-          for (var depth = 0; depth <= maxDepth; depth++) {
-              while (depths[depth].length > 1) {
-
-                  var first = depths[depth].shift(),
-                      second = depths[depth].shift(),
-                      newDepth = depth + 1,
-                      pos = -1;
-
-                  if (this.nodes[first].distance < this.nodes[second].distance) {
-                      this.nodes[first].depth = newDepth;
-                      this.nodes[first].children.push(second);
-                      this.nodes[second].parent = first;
-
-                      if (newDepth <= maxDepth) {
-                          depths[newDepth].push(first);
-                      }
-
-                      // Find position in roots where adopted node is
-                      pos = this.roots.indexOf(second);
-
-                  } else {
-                      this.nodes[second].depth = newDepth;
-                      this.nodes[second].children.push(first);
-                      this.nodes[first].parent = second;
-
-                      if (newDepth <= maxDepth) {
-                          depths[newDepth].push(second);
-                      }
-
-                      // Find position in roots where adopted node is
-                      pos = this.roots.indexOf(first);
-                  }
-
-                  // Remove roots that have been made children
-                  if (pos > -1) {
-                      this.roots.splice(pos, 1);
-                  }
-              }
-          }
-      }
-
-      MinHeap.prototype.add = function(node, distance)
-      {
-          // Add the node
-          this.nodes[node] = {
-              node: node,
-              distance: distance,
-              depth: 0,
-              parent: null,
-              children: []
-          };
-
-          // Is it the minimum?
-          if (!this.min || distance < this.nodes[this.min].distance) {
-              this.min = node;
-          }
-
-          // Other stuff
-          this.roots.push(node);
-      }
-
-      MinHeap.prototype.update = function(node, distance)
-      {
-          this.remove(node);
-          this.add(node, distance);
-      }
-
-      MinHeap.prototype.remove = function(node)
-      {
-          if (!this.nodes[node]) {
-              return;
-          }
-
-          // Move children to be children of the parent
-          var numChildren = this.nodes[node].children.length;
-          if (numChildren > 0) {
-              for (var i = 0; i < numChildren; i++) {
-                  var child = this.nodes[node].children[i];
-                  this.nodes[child].parent = this.nodes[node].parent;
-
-                  // No parent, then add to roots
-                  if (this.nodes[child].parent == null) {
-                      this.roots.push(child);
-                  }
-              }
-          }
-
-          var parent = this.nodes[node].parent;
-
-          // Root, so remove from roots
-          if (parent == null) {
-              var pos = this.roots.indexOf(node);
-              if (pos > -1) {
-                  this.roots.splice(pos, 1);
-              }
+            // Find position in roots where adopted node is
+            pos = this.roots.indexOf(second);
           } else {
-              // Go up the parents and decrease their depth
-              while (parent) {
-                  this.nodes[parent].depth--;
-                  parent = this.nodes[parent].parent
-              }
+            this.nodes[second].depth = newDepth;
+            this.nodes[second].children.push(first);
+            this.nodes[first].parent = second;
+
+            if (newDepth <= maxDepth) {
+              depths[newDepth].push(second);
+            }
+
+            // Find position in roots where adopted node is
+            pos = this.roots.indexOf(first);
           }
+
+          // Remove roots that have been made children
+          if (pos > -1) {
+            this.roots.splice(pos, 1);
+          }
+        }
+      }
+    };
+
+    MinHeap.prototype.add = function (node, distance) {
+      // Add the node
+      this.nodes[node] = {
+        node: node,
+        distance: distance,
+        depth: 0,
+        parent: null,
+        children: [],
+      };
+
+      // Is it the minimum?
+      if (!this.min || distance < this.nodes[this.min].distance) {
+        this.min = node;
       }
 
-      MinHeap.prototype.getDistance = function(node)
-      {
-          if (this.nodes[node]) {
-              return this.nodes[node].distance;
-          }
-          return Infinity;
+      // Other stuff
+      this.roots.push(node);
+    };
+
+    MinHeap.prototype.update = function (node, distance) {
+      this.remove(node);
+      this.add(node, distance);
+    };
+
+    MinHeap.prototype.remove = function (node) {
+      if (!this.nodes[node]) {
+        return;
       }
 
-      return MinHeap;
+      // Move children to be children of the parent
+      var numChildren = this.nodes[node].children.length;
+      if (numChildren > 0) {
+        for (var i = 0; i < numChildren; i++) {
+          var child = this.nodes[node].children[i];
+          this.nodes[child].parent = this.nodes[node].parent;
+
+          // No parent, then add to roots
+          if (this.nodes[child].parent == null) {
+            this.roots.push(child);
+          }
+        }
+      }
+
+      var parent = this.nodes[node].parent;
+
+      // Root, so remove from roots
+      if (parent == null) {
+        var pos = this.roots.indexOf(node);
+        if (pos > -1) {
+          this.roots.splice(pos, 1);
+        }
+      } else {
+        // Go up the parents and decrease their depth
+        while (parent) {
+          this.nodes[parent].depth--;
+          parent = this.nodes[parent].parent;
+        }
+      }
+    };
+
+    MinHeap.prototype.getDistance = function (node) {
+      if (this.nodes[node]) {
+        return this.nodes[node].distance;
+      }
+      return Infinity;
+    };
+
+    return MinHeap;
   })();
 
   return Dijkstras;
@@ -285,32 +276,36 @@ export default class extends React.Component {
     super(props, context);
 
     this.state = {
-      DepartureTime: "00:00",
+      EmailAddress: '',
+      DepartureTime: '00:00',
       DepartureStation: 0,
       ArrivalStation: 0,
-      SearchDepartureTime: "00:00",
+      SearchDepartureTime: '00:00',
       SearchDepartureStation: 0,
       SearchArrivalStation: 0,
-      ActiveTab: "최소시간",
+      ActiveTab: '최소시간',
       SearchResult: false,
       Share: false,
       SearchList: [],
       DijkstraMinute: 0,
       DijkstraSecond: 0,
-      DijkstraStationNum : 0,
-      DijkstraArrivalTime : "00:00",
-      DijkstraDistance : 0,
-      DijkstraMoney : 0,
+      DijkstraStationNum: 0,
+      DijkstraArrivalTime: '00:00',
+      DijkstraDistance: 0,
+      DijkstraMoney: 0,
     };
-  }
-    
-  componentDidMount(){
-    this.setState({
-      SearchList: JSON.parse(localStorage.getItem("SearchList")) || [],
-    })
+
+    this.handleChange = this.handleChange.bind(this);
+    this.sendEmail = this.sendEmail.bind(this);
   }
 
-  setActiveTab = (Tab) => {
+  componentDidMount() {
+    this.setState({
+      SearchList: JSON.parse(localStorage.getItem('SearchList')) || [],
+    });
+  }
+
+  setActiveTab = Tab => {
     this.setState({
       ActiveTab: Tab,
       SearchResult: false,
@@ -318,42 +313,42 @@ export default class extends React.Component {
     });
   };
 
-  setDepartureTime =(e) => {
+  setDepartureTime = e => {
     this.setState({
       DepartureTime: e.target.value,
     });
   };
 
-  setDepartureStation = (e) => {
+  setDepartureStation = e => {
     this.setState({
       DepartureStation: Number(e.target.value),
     });
   };
 
-  setArrivalStation = (e) => {
+  setArrivalStation = e => {
     this.setState({
       ArrivalStation: Number(e.target.value),
     });
   };
 
-  setActiveSearchResult = (e) => {
-    
-    this.setState({
-      SearchDepartureTime: this.state.DepartureTime,
-      SearchDepartureStation: this.state.DepartureStation,
-      SearchArrivalStation: this.state.ArrivalStation,
-    },
-    () => {
-      this.saveSearchList();
-      this.useDijkstra();
-    })
+  setActiveSearchResult = e => {
+    this.setState(
+      {
+        SearchDepartureTime: this.state.DepartureTime,
+        SearchDepartureStation: this.state.DepartureStation,
+        SearchArrivalStation: this.state.ArrivalStation,
+      },
+      () => {
+        this.saveSearchList();
+        this.useDijkstra();
+      },
+    );
     if (this.state.SearchResult === false) {
       this.setState({
         SearchResult: true,
       });
     }
   };
-  
 
   setActiveShare = () => {
     if (this.state.Share === false) {
@@ -365,36 +360,33 @@ export default class extends React.Component {
   };
 
   saveSearchList = () => {
-    const value = this.state.SearchDepartureTime + " " + this.state.SearchDepartureStation + "→" + this.state.SearchArrivalStation
+    const value =
+      this.state.SearchDepartureTime + ' ' + this.state.SearchDepartureStation + '→' + this.state.SearchArrivalStation;
     this.setState(
-      state => ({ SearchList: [...state.SearchList, value]}),
-      () => localStorage.setItem("SearchList", JSON.stringify(this.state.SearchList))
+      state => ({ SearchList: [...state.SearchList, value] }),
+      () => localStorage.setItem('SearchList', JSON.stringify(this.state.SearchList)),
     );
-  }
+  };
 
   deleteSearchList = index => {
-    if (window.confirm("목록에서 지우시겠습니까?")) {
+    if (window.confirm('목록에서 지우시겠습니까?')) {
       this.setState(
         state => ({
-          SearchList: [
-            ...state.SearchList.slice(0, index),
-            ...state.SearchList.slice(index + 1)
-          ]
+          SearchList: [...state.SearchList.slice(0, index), ...state.SearchList.slice(index + 1)],
         }),
-        () =>
-          localStorage.setItem("SearchList", JSON.stringify(this.state.SearchList))
+        () => localStorage.setItem('SearchList', JSON.stringify(this.state.SearchList)),
       );
     }
-  }
+  };
 
   updateSearchInput = index => {
     this.setState({
       DepartureTime: this.state.SearchList[index].slice(0, 5),
       DepartureStation: this.state.SearchList[index].slice(6, 9),
       ArrivalStation: this.state.SearchList[index].slice(10, 13),
-    })
-  }
-
+    });
+  };
+  // prettier-ignore
   useDijkstra = () => {
     var d = new Dijkstras();
     var dDistance = new Dijkstras();
@@ -775,8 +767,6 @@ export default class extends React.Component {
     var cost = 0;
     var DistanceCost = 0;
     var MoneyCost = 0;
-
-    console.log(path);
     
     if( this.state.ActiveTab == '최소시간'){
       for(var route in path){
@@ -799,9 +789,6 @@ export default class extends React.Component {
           }
         }
       }
-      console.log(cost);
-      console.log(DistanceCost);
-      console.log(MoneyCost);
     } 
     else if(this.state.ActiveTab == '최단거리'){
       for(var routeDistance in pathDistance){
@@ -824,9 +811,6 @@ export default class extends React.Component {
           }
         }
       }
-      console.log(cost);
-      console.log(DistanceCost);
-      console.log(MoneyCost);
     } 
     else if(this.state.ActiveTab == '최소비용'){
       for(var routeMoney in pathMoney){
@@ -849,9 +833,6 @@ export default class extends React.Component {
           }
         }
       }
-      console.log(cost);
-      console.log(DistanceCost);
-      console.log(MoneyCost);
     }
 
     var timeSplit = this.state.SearchDepartureTime.split(':');
@@ -884,10 +865,58 @@ export default class extends React.Component {
       DijkstraMoney: MoneyCost,
     })
   }
+  handleChange(e) {
+    this.setState({ EmailAddress: e.target.value });
+  }
+  sendEmail(e) {
+    let message = e.target.parentElement.innerText;
+    let splitMessage = message.split('\n');
+    message =
+      '고객님의 이동경로는' +
+      splitMessage[2] +
+      '이며 ' +
+      splitMessage[4] +
+      '예정입니다. 도착 예정시간은' +
+      splitMessage[6];
+
+    const emailAddress = this.state.EmailAddress;
+    const variables = {
+      title: '예상 도착시간',
+      to_email: emailAddress,
+      message: message,
+      from_name: 'EASY 하철',
+      reply_to: 'noa316@naver.com',
+    };
+
+    if (this.emailIsValid(emailAddress) && message.length != 0) {
+      emailjs
+        .send(
+          'dev.noah0316@gmail.com',
+          process.env.REACT_APP_EMAILJS_ARRIVED_TEMPLATE_KEY,
+          variables,
+          process.env.REACT_APP_EMAILJS_KEY,
+        )
+        .then(res => {
+          alert(emailAddress + '님 에게 이메일 전송이 완료되었습니다.');
+          console.log('Email successfully sent!');
+        })
+        // Handle errors here however you like, or use a React error boundary
+        .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err));
+    } else {
+      alert('이메일 형식이 올바르지 않거나, 도착정보가 올바르지 않습니다. 다시 입력하세요');
+    }
+  }
+
+  // 정규표현식을 이용한 email validation
+  emailIsValid(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
   render() {
     return (
       <SearchPresenter
+        handleChange={this.handleChange}
+        sendEmail={this.sendEmail}
         ActiveTab={this.state.ActiveTab}
         DepartureTime={this.state.DepartureTime}
         DepartureStation={this.state.DepartureStation}
