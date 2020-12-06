@@ -253,9 +253,11 @@ const DownloadButtonText = styled.div`
   height: 25px;
   font-size: 29px;
   text-align: center;
+  color: black;
   margin: auto 0 auto 18%;
   &:visited {
     text-decoration: none;
+    color: black;
   }
   @media screen and (max-width: 900px) {
     width: 113px;

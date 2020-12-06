@@ -1,12 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import Helmet from "react-helmet";
-import Header from "../../Components/Header";
-import Cancel from "../../assets/Cancel.png";
-import CancelRed from "../../assets/CancelRed.png"
-import UpDownArrow from "../../assets/Up Down arrow.png";
-import Space1 from "../../assets/Space1.png";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Helmet from 'react-helmet';
+import Header from '../../Components/Header';
+import Clock from '../../assets/Clock.png';
+import Cancel from '../../assets/Cancel.png';
+import CancelRed from '../../assets/CancelRed.png';
+import UpDownArrow from '../../assets/Up Down arrow.png';
+import Search from '../../assets/Search.png';
+import Space1 from '../../assets/Space1.png';
+import Space2 from '../../assets/Space2.png';
+
 
 const SearchHeader = styled.div`
   display: flex;
@@ -22,7 +26,7 @@ const SearchTab = styled.div`
   line-height: 70px;
   font-size: 30px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 34%;
     height: 100%;
     line-height: 230%;
@@ -40,7 +44,7 @@ const ActiveSearchTab = styled.div`
   line-height: 70px;
   font-size: 30px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 34%;
     height: 100%;
     line-height: 230%;
@@ -95,6 +99,7 @@ const SearchChangeImg = styled.img`
   width: 45px;
   height: 45px;
   color: #303747;
+
 
   @media (min-width: 320px) and (max-width: 480px){
     width: 10%;
@@ -156,7 +161,7 @@ const SearchInput = styled.input`
     color: white;
   }
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     -webkit-appearance: none;
     width: 70%;
     height: 40%;
@@ -168,8 +173,8 @@ const Container = styled.div`
   height: 100%;
   padding: 0;
   margin: 0;
-  
-  @media (min-width: 320px) and (max-width: 480px){
+
+  @media (min-width: 320px) and (max-width: 480px) {
     display: block;
   }
 `;
@@ -180,7 +185,7 @@ const SearchResult = styled.div`
   margin: 0;
   padding: 0;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 100%;
     height: 40%;
   }
@@ -191,7 +196,7 @@ const SearchFont1 = styled.p`
   margin: 28px;
   text-align: center;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     font-size: 150%;
     margin: 5%;
   }
@@ -202,7 +207,7 @@ const SearchFont2 = styled.p`
   margin: 28px;
   text-align: center;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     font-size: 130%;
     margin: 5%;
   }
@@ -233,7 +238,7 @@ const SearchShareButton = styled.div`
   color: #2699fb;
   line-height: 70px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 50%;
     height: 15%;
     border-radius: 16px;
@@ -253,7 +258,7 @@ const SharePanel = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 90%;
     height: 50%;
     border-radius: 44px;
@@ -268,7 +273,7 @@ const ShareInput = styled.input`
   border: solid 3px #84e0cb;
   margin: 0 auto;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 80%;
     height: 10%;
   }
@@ -284,7 +289,7 @@ const ShareButton = styled.div`
   color: #84e0cb;
   margin: 60px auto;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     -webkit-appearance: none;
     width: 40%;
     height: 11%;
@@ -302,7 +307,7 @@ const RecentlySearch = styled.div`
   margin: 0;
   padding: 0;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 100%;
     height: 30%;
   }
@@ -318,14 +323,14 @@ const CancelImg = styled.img`
   width: 20px;
   height: 20px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     margin-top: 6%;
     width: 4%;
     height: 4%;
   }
 `;
 
-const SearchPresenter = (props) => (
+const SearchPresenter = props => (
   <>
     <Helmet>
       <title>경로검색 | EasyHachul</title>
@@ -334,32 +339,20 @@ const SearchPresenter = (props) => (
     <Header></Header>
 
     <SearchHeader>
-      {props.ActiveTab === "최소시간" ? (
-        <ActiveSearchTab onClick={() => props.setActiveTab("최소시간")}>
-          최소시간
-        </ActiveSearchTab>
+      {props.ActiveTab === '최소시간' ? (
+        <ActiveSearchTab onClick={() => props.setActiveTab('최소시간')}>최소시간</ActiveSearchTab>
       ) : (
-        <SearchTab onClick={() => props.setActiveTab("최소시간")}>
-          최소시간
-        </SearchTab>
+        <SearchTab onClick={() => props.setActiveTab('최소시간')}>최소시간</SearchTab>
       )}
-      {props.ActiveTab === "최단거리" ? (
-        <ActiveSearchTab onClick={() => props.setActiveTab("최단거리")}>
-          최단거리
-        </ActiveSearchTab>
+      {props.ActiveTab === '최단거리' ? (
+        <ActiveSearchTab onClick={() => props.setActiveTab('최단거리')}>최단거리</ActiveSearchTab>
       ) : (
-        <SearchTab onClick={() => props.setActiveTab("최단거리")}>
-          최단거리
-        </SearchTab>
+        <SearchTab onClick={() => props.setActiveTab('최단거리')}>최단거리</SearchTab>
       )}
-      {props.ActiveTab === "최소비용" ? (
-        <ActiveSearchTab onClick={() => props.setActiveTab("최소비용")}>
-          최소비용
-        </ActiveSearchTab>
+      {props.ActiveTab === '최소비용' ? (
+        <ActiveSearchTab onClick={() => props.setActiveTab('최소비용')}>최소비용</ActiveSearchTab>
       ) : (
-        <SearchTab onClick={() => props.setActiveTab("최소비용")}>
-          최소비용
-        </SearchTab>
+        <SearchTab onClick={() => props.setActiveTab('최소비용')}>최소비용</SearchTab>
       )}
     </SearchHeader>
 
@@ -405,10 +398,12 @@ const SearchPresenter = (props) => (
         <SearchFont2>
           {props.SearchDepartureStation} → {props.SearchArrivalStation}
         </SearchFont2>
-        <SearchFont2>{props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동</SearchFont2>
+        <SearchFont2>
+          {props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동
+        </SearchFont2>
         <SearchFont2>{props.DijkstraArrivalTime} 도착예정</SearchFont2>
-        <ShareInput placeholder="이메일 입력"></ShareInput>
-        <ShareButton>이메일 보내기</ShareButton>
+        <ShareInput onChange={props.handleChange} placeholder="이메일 입력"></ShareInput>
+        <ShareButton onClick={e => props.sendEmail(e)}>이메일 보내기</ShareButton>
       </SharePanel>
     )}
 
@@ -419,16 +414,30 @@ const SearchPresenter = (props) => (
           <SearchFont2>
             {props.SearchDepartureStation} → {props.SearchArrivalStation}
           </SearchFont2>
-          <SearchFont2>{props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동</SearchFont2>
+          <SearchFont2>
+            {props.DijkstraMinute}분, {props.DijkstraSecond}초 소요, {props.DijkstraStationNum}개 정류장 이동
+          </SearchFont2>
           <SearchFont2>{props.DijkstraDistance}M</SearchFont2>
           <SearchFont2>{props.DijkstraMoney}원</SearchFont2>
           <SearchFont2>{props.DijkstraArrivalTime} 도착예정</SearchFont2>
-          <SearchShareButton onClick={() => props.setActiveShare()}>
-            도착시간 공유
-          </SearchShareButton>
+          <SearchShareButton onClick={() => props.setActiveShare()}>도착시간 공유</SearchShareButton>
         </SearchResult>
 
         <SearchResultMap>지하철 노선도가 들어갈 자리</SearchResultMap>
+      </Container>
+    ) : props.Share === false ? (
+      <Container>
+        <RecentlySearch>
+          <SearchFont1>최근검색</SearchFont1>
+          {props.SearchList.map((Search, index) => (
+            <RecentlySearchList key={index}>
+              <SearchFont2 key={index} onClick={() => props.updateSearchInput(index)}>
+                {Search}
+              </SearchFont2>
+              <CancelImg src={CancelRed} key={index} onClick={() => props.deleteSearchList(index)} />
+            </RecentlySearchList>
+          ))}
+        </RecentlySearch>
       </Container>
     ) : (
       props.Share === false ? (
@@ -481,6 +490,8 @@ SearchPresenter.propTypes = {
   saveSearchList: PropTypes.func.isRequired,
   deleteSearchList: PropTypes.func.isRequired,
   updateSearchInput: PropTypes.func.isRequired,
+  handleChange: PropTypes.func,
+  sendEmail: PropTypes.func,
 };
 
 export default SearchPresenter;
