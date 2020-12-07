@@ -11,7 +11,6 @@ import Search from '../../assets/Search.png';
 import Space1 from '../../assets/Space1.png';
 import Space2 from '../../assets/Space2.png';
 
-
 const SearchHeader = styled.div`
   display: flex;
 `;
@@ -59,8 +58,8 @@ const SearchPanel = styled.div`
   text-align: center;
   padding: 8px;
 
-  @media (min-width: 320px) and (max-width: 480px){
-    height: 30%;
+  @media (min-width: 320px) and (max-width: 480px) {
+    height: 35%;
   }
 `;
 
@@ -78,7 +77,7 @@ const SearchTimeFont = styled.div`
   margin-top: -30px;
   font-size: 23px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     font-size: 18px;
   }
 `;
@@ -88,9 +87,10 @@ const SearchCancelImg = styled.img`
   width: 40px;
   height: 40px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 10%;
     height: 10%;
+    margin-left: 1%;
   }
 `;
 
@@ -100,10 +100,10 @@ const SearchChangeImg = styled.img`
   height: 45px;
   color: #303747;
 
-
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 10%;
     height: 10%;
+    margin-left: 1%;
   }
 `;
 
@@ -112,7 +112,7 @@ const SearchSpaceImg = styled.img`
   width: 45px;
   height: 40px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     width: 12%;
     height: 12%;
   }
@@ -129,7 +129,7 @@ const SearchButton = styled.div`
   color: #303747;
   margin-top: 0px;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     -webkit-appearance: none;
     width: 13%;
     height: 5%;
@@ -221,7 +221,7 @@ const SearchResultMap = styled.div`
   text-align: center;
   border: solid 2px #000000;
 
-  @media (min-width: 320px) and (max-width: 480px){
+  @media (min-width: 320px) and (max-width: 480px) {
     margin: 10%;
     width: 80%;
     height: 100%;
@@ -362,15 +362,15 @@ const SearchPresenter = props => (
           <SearchTimeFont>출발시간</SearchTimeFont>
           {/* <SearchImg src={Clock} /> */}
           <SearchInput
-           type="time" 
-           placeholder="출발시간을 입력해 주세요."
-           value={props.DepartureTime}
-           onChange={props.setDepartureTime}
-           ></SearchInput>
+            type="time"
+            placeholder="출발시간을 입력해 주세요."
+            value={props.DepartureTime}
+            onChange={props.setDepartureTime}
+          ></SearchInput>
           <SearchSpaceImg src={Space1} />
         </SearchList>
         <SearchList>
-          <SearchCancelImg src={Cancel} onClick={() => props.deleteDepArrStation()}/>
+          <SearchCancelImg src={Cancel} onClick={() => props.deleteDepArrStation()} />
           <SearchInput
             placeholder="출발지 검색"
             value={props.DepartureStation}
@@ -380,16 +380,14 @@ const SearchPresenter = props => (
           <SearchSpaceImg src={Space1} />
         </SearchList>
         <SearchList>
-          <SearchChangeImg src={UpDownArrow} onClick={() => props.changeDepArrStation()}/>
+          <SearchChangeImg src={UpDownArrow} onClick={() => props.changeDepArrStation()} />
           <SearchInput
             placeholder="도착지 검색"
             value={props.ArrivalStation}
             onChange={props.setArrivalStation}
             onKeyPress={props.pressEnter}
           ></SearchInput>
-          <SearchButton 
-            onClick={props.setActiveSearchResult}
-          >검색</SearchButton>
+          <SearchButton onClick={props.setActiveSearchResult}>검색</SearchButton>
         </SearchList>
       </SearchPanel>
     ) : (
@@ -439,24 +437,24 @@ const SearchPresenter = props => (
           ))}
         </RecentlySearch>
       </Container>
-    ) : (
-      props.Share === false ? (
-        <Container>
-          <RecentlySearch>
-            <SearchFont1>최근검색</SearchFont1>
-            {props.SearchList.map((Search, index) => (
-              <RecentlySearchList key={index}>
-                <SearchFont2 key={index} onClick={() => props.updateSearchInput(index)}>{Search}</SearchFont2>
-                <CancelImg src={CancelRed} key={index} onClick={() => props.deleteSearchList(index)}/>
-              </RecentlySearchList>
-            ))}
-          </RecentlySearch>
+    ) : props.Share === false ? (
+      <Container>
+        <RecentlySearch>
+          <SearchFont1>최근검색</SearchFont1>
+          {props.SearchList.map((Search, index) => (
+            <RecentlySearchList key={index}>
+              <SearchFont2 key={index} onClick={() => props.updateSearchInput(index)}>
+                {Search}
+              </SearchFont2>
+              <CancelImg src={CancelRed} key={index} onClick={() => props.deleteSearchList(index)} />
+            </RecentlySearchList>
+          ))}
+        </RecentlySearch>
 
-          <SearchResultMap>지하철 노선도가 들어갈 자리</SearchResultMap>
-        </Container>
-      ) : (
-        <Container></Container>
-      )
+        <SearchResultMap>지하철 노선도가 들어갈 자리</SearchResultMap>
+      </Container>
+    ) : (
+      <Container></Container>
     )}
   </>
 );
