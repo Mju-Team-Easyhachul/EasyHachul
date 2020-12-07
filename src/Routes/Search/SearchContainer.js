@@ -320,133 +320,137 @@ export default class extends React.Component {
     });
   };
 
-  setDepartureStation = (e) => {
-    isNaN(e.target.value) ? 
-      alert('숫자 이외의 값을 입력하였습니다!')
-      : 
-      this.setState({
-        DepartureStation: Number(e.target.value),
-      })
+  setDepartureStation = e => {
+    isNaN(e.target.value)
+      ? alert('숫자 이외의 값을 입력하였습니다!')
+      : this.setState({
+          DepartureStation: Number(e.target.value),
+        });
   };
 
-  setArrivalStation = (e) => {
-    isNaN(e.target.value) ? 
-      alert('숫자 이외의 값을 입력하였습니다!')
-      : 
-      this.setState({
-        ArrivalStation: Number(e.target.value),
-      });
+  setArrivalStation = e => {
+    isNaN(e.target.value)
+      ? alert('숫자 이외의 값을 입력하였습니다!')
+      : this.setState({
+          ArrivalStation: Number(e.target.value),
+        });
   };
 
-  deleteDepArrStation = (e) => {
+  deleteDepArrStation = e => {
     this.setState({
       DepartureStation: 0,
       ArrivalStation: 0,
-    })
-  }
+    });
+  };
 
-  changeDepArrStation = (e) => {
+  changeDepArrStation = e => {
     var temp = this.state.DepartureStation;
     this.setState({
       DepartureStation: this.state.ArrivalStation,
       ArrivalStation: temp,
-    })
-  }
+    });
+  };
 
-  pressEnter = (e) => {
-    if(e.key == 'Enter'){
+  pressEnter = e => {
+    if (e.key == 'Enter') {
       this.setActiveSearchResult();
     }
-  }
-
-  setActiveSearchResult = (e) => {
-    
-    this.setState({
-      SearchDepartureTime: this.state.DepartureTime,
-      SearchDepartureStation: this.state.DepartureStation,
-      SearchArrivalStation: this.state.ArrivalStation,
-    },
-    () => {
-      this.isInputTypeValid();
-    })
   };
-  
-  isInputTypeValid = () => {
-    if(this.state.SearchDepartureStation === 0 || this.state.SearchArrivalStation === 0){
-      alert("역정보를 입력하지 않았습니다!")
-      this.setState({
-        InputTypeValid: false,
-        SearchResult: false,
-      })
-    }
-    else if(String(this.state.SearchDepartureStation).length <= 2 || String(this.state.SearchDepartureStation).length >= 4){
-      alert("입력하신 값이 입력형식(3글자의 숫자)에 적합하지 않습니다!")
-      this.setState({
-        InputTypeValid: false,
-        SearchResult: false,
-      })
-    }
-    else if(String(this.state.SearchArrivalStation).length <= 2 || String(this.state.SearchArrivalStation).length >= 4){
-      alert("입력하신 값이 입력형식(3글자의 숫자)에 적합하지 않습니다!")
-      this.setState({
-        InputTypeValid: false,
-        SearchResult: false,
-      })
-    }
-    else if((this.state.SearchDepartureStation == 100 )||
-    (this.state.SearchDepartureStation > 123 && this.state.SearchDepartureStation < 201)||
-    (this.state.SearchDepartureStation > 217 && this.state.SearchDepartureStation < 301)||
-    (this.state.SearchDepartureStation > 308 && this.state.SearchDepartureStation < 401)||
-    (this.state.SearchDepartureStation > 417 && this.state.SearchDepartureStation < 501)||
-    (this.state.SearchDepartureStation > 507 && this.state.SearchDepartureStation < 601)||
-    (this.state.SearchDepartureStation > 622 && this.state.SearchDepartureStation < 701)||
-    (this.state.SearchDepartureStation > 707 && this.state.SearchDepartureStation < 801)||
-    (this.state.SearchDepartureStation > 806 && this.state.SearchDepartureStation < 901)||
-    (this.state.SearchDepartureStation > 904 && this.state.SearchDepartureStation < 1000)){
-      alert("존재하지 않은 역명입니다!");
-      this.setState({
-        InputTypeValid: false,
-        SearchResult: false,
-      })
-    }
-    else if((this.state.SearchArrivalStation == 100 )||
-    (this.state.SearchArrivalStation > 123 && this.state.SearchArrivalStation < 201)||
-    (this.state.SearchArrivalStation > 217 && this.state.SearchArrivalStation < 301)||
-    (this.state.SearchArrivalStation > 308 && this.state.SearchArrivalStation < 401)||
-    (this.state.SearchArrivalStation > 417 && this.state.SearchArrivalStation < 501)||
-    (this.state.SearchArrivalStation > 507 && this.state.SearchArrivalStation < 601)||
-    (this.state.SearchArrivalStation > 622 && this.state.SearchArrivalStation < 701)||
-    (this.state.SearchArrivalStation > 707 && this.state.SearchArrivalStation < 801)||
-    (this.state.SearchArrivalStation > 806 && this.state.SearchArrivalStation < 901)||
-    (this.state.SearchArrivalStation > 904 && this.state.SearchArrivalStation < 1000)){
-      alert("존재하지 않은 역명입니다!");
-      this.setState({
-        InputTypeValid: false,
-        SearchResult: false,
-      })
-    }
-    else if(this.state.SearchDepartureStation === this.state.SearchArrivalStation){
-      alert("출발역과 도착역이 동일합니다!");
-      this.setState({
-        InputTypeValid: false,
-        SearchResult: false,
-      })
-    }
-    else{
-      this.setState({
-        InputTypeValid: true,
+
+  setActiveSearchResult = e => {
+    this.setState(
+      {
+        SearchDepartureTime: this.state.DepartureTime,
+        SearchDepartureStation: this.state.DepartureStation,
+        SearchArrivalStation: this.state.ArrivalStation,
       },
       () => {
-        this.saveSearchList();
-        this.useDijkstra();
+        this.isInputTypeValid();
+      },
+    );
+  };
 
-        this.setState({
-          SearchResult: true,
-        })
-      })
+  isInputTypeValid = () => {
+    if (this.state.SearchDepartureStation === 0 || this.state.SearchArrivalStation === 0) {
+      alert('역정보를 입력하지 않았습니다!');
+      this.setState({
+        InputTypeValid: false,
+        SearchResult: false,
+      });
+    } else if (
+      String(this.state.SearchDepartureStation).length <= 2 ||
+      String(this.state.SearchDepartureStation).length >= 4
+    ) {
+      alert('입력하신 값이 입력형식(3글자의 숫자)에 적합하지 않습니다!');
+      this.setState({
+        InputTypeValid: false,
+        SearchResult: false,
+      });
+    } else if (
+      String(this.state.SearchArrivalStation).length <= 2 ||
+      String(this.state.SearchArrivalStation).length >= 4
+    ) {
+      alert('입력하신 값이 입력형식(3글자의 숫자)에 적합하지 않습니다!');
+      this.setState({
+        InputTypeValid: false,
+        SearchResult: false,
+      });
+    } else if (
+      this.state.SearchDepartureStation == 100 ||
+      (this.state.SearchDepartureStation > 123 && this.state.SearchDepartureStation < 201) ||
+      (this.state.SearchDepartureStation > 217 && this.state.SearchDepartureStation < 301) ||
+      (this.state.SearchDepartureStation > 308 && this.state.SearchDepartureStation < 401) ||
+      (this.state.SearchDepartureStation > 417 && this.state.SearchDepartureStation < 501) ||
+      (this.state.SearchDepartureStation > 507 && this.state.SearchDepartureStation < 601) ||
+      (this.state.SearchDepartureStation > 622 && this.state.SearchDepartureStation < 701) ||
+      (this.state.SearchDepartureStation > 707 && this.state.SearchDepartureStation < 801) ||
+      (this.state.SearchDepartureStation > 806 && this.state.SearchDepartureStation < 901) ||
+      (this.state.SearchDepartureStation > 904 && this.state.SearchDepartureStation < 1000)
+    ) {
+      alert('존재하지 않은 역명입니다!');
+      this.setState({
+        InputTypeValid: false,
+        SearchResult: false,
+      });
+    } else if (
+      this.state.SearchArrivalStation == 100 ||
+      (this.state.SearchArrivalStation > 123 && this.state.SearchArrivalStation < 201) ||
+      (this.state.SearchArrivalStation > 217 && this.state.SearchArrivalStation < 301) ||
+      (this.state.SearchArrivalStation > 308 && this.state.SearchArrivalStation < 401) ||
+      (this.state.SearchArrivalStation > 417 && this.state.SearchArrivalStation < 501) ||
+      (this.state.SearchArrivalStation > 507 && this.state.SearchArrivalStation < 601) ||
+      (this.state.SearchArrivalStation > 622 && this.state.SearchArrivalStation < 701) ||
+      (this.state.SearchArrivalStation > 707 && this.state.SearchArrivalStation < 801) ||
+      (this.state.SearchArrivalStation > 806 && this.state.SearchArrivalStation < 901) ||
+      (this.state.SearchArrivalStation > 904 && this.state.SearchArrivalStation < 1000)
+    ) {
+      alert('존재하지 않은 역명입니다!');
+      this.setState({
+        InputTypeValid: false,
+        SearchResult: false,
+      });
+    } else if (this.state.SearchDepartureStation === this.state.SearchArrivalStation) {
+      alert('출발역과 도착역이 동일합니다!');
+      this.setState({
+        InputTypeValid: false,
+        SearchResult: false,
+      });
+    } else {
+      this.setState(
+        {
+          InputTypeValid: true,
+        },
+        () => {
+          this.saveSearchList();
+          this.useDijkstra();
+
+          this.setState({
+            SearchResult: true,
+          });
+        },
+      );
     }
-  }
-
+  };
 
   setActiveShare = () => {
     if (this.state.Share === false) {
@@ -467,18 +471,13 @@ export default class extends React.Component {
   };
 
   deleteSearchList = index => {
-
     this.setState(
       state => ({
-        SearchList: [
-          ...state.SearchList.slice(0, index),
-          ...state.SearchList.slice(index + 1)
-        ]
+        SearchList: [...state.SearchList.slice(0, index), ...state.SearchList.slice(index + 1)],
       }),
-      () =>
-        localStorage.setItem("SearchList", JSON.stringify(this.state.SearchList))
+      () => localStorage.setItem('SearchList', JSON.stringify(this.state.SearchList)),
     );
-  }
+  };
 
   updateSearchInput = index => {
     this.setState({
