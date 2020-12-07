@@ -16,8 +16,11 @@ const TopContainer = styled.div`
   background: ${props => props.color || 'black'};
 `;
 const LineNumber = styled.div`
+  @media (max-width: 900px) {
+    height: 92%;
+  }
   width: 20%;
-  height: 100%;
+  height: 96%;
   margin: 0 0 0 40%;
   border: 2px solid;
   background: white;
@@ -25,7 +28,7 @@ const LineNumber = styled.div`
 `;
 const LineNumberFont = styled.h1`
   @media (max-width: 900px) {
-    margin-top: 11%;
+    margin-top: 20%;
     font-size: 20px;
   }
   margin-top: 11%;
@@ -34,13 +37,16 @@ const LineNumberFont = styled.h1`
 `;
 
 const SelectContainer = styled.div`
+  @media screen and (max-width: 900px) {
+    margin: 1% 10% 1% 10.4%;
+  }
   width: 80%;
   height: 10%;
-  margin: 1px 10% 1% 10.4%;
+  margin: 0.5% 10% 1% 10.4%;
 `;
 const SelectButton = styled.button`
   @media screen and (max-width: 900px) {
-    font-size: 17px;
+    font-size: 16px;
     height: 80%;
   }
   width: 33%;
@@ -51,7 +57,7 @@ const SelectButton = styled.button`
 `;
 const SelectInfoButton = styled.button`
   @media screen and (max-width: 900px) {
-    font-size: 17px;
+    font-size: 16px;
     height: 80%;
   }
   width: 33%;
@@ -80,7 +86,7 @@ const BaseInfoText = styled.h2`
 `;
 
 const InfoButton = styled.button`
-  @media screen and (max-width: 900px) {
+  @media (max-width: 900px) {
     font-size: 17px;
     height: 7%;
   }
@@ -91,65 +97,66 @@ const InfoButton = styled.button`
   color: white;
 `;
 const LineInfoDetail = styled.div`
-  @media (max-width: 900px) {
+  @media (max-width: 930px) {
     height: 20%;
-    width: 24.8%;
+    width: 23.5%;
     border-radius: 0px;
   }
   background-color: #ffffff;
   margin-top: 1%;
   margin-bottom: 2%;
   height: 50%;
-  width: 24.8%;
+  width: 24.5%;
   display: inline-block;
   border: 2px solid;
   border-color: #535353;
   border-radius: 30px;
 `;
 const LineInfoDivider = styled.hr`
-  @media (max-width: 900px) {
+  @media (max-width: 930px) {
     border: 0;
   }
   align: center;
   border: 1px solid #717171;
+  margin-top: 24%;
 `;
 const LineInfoFont1 = styled.h1`
-  @media (max-width: 900px) {
+  @media screen and (max-width: 930px) {
     font-size: 24px;
-    margin-top: 40%;
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
   text-align: center;
   font-size: 23.74px;
-  margin-top: 30%;
-  margin-bottom: 30%;
+  margin-top: 24%;
 `;
 const LineInfoFont2 = styled.h1`
-  @media (max-width: 900px) {
+  @media screen and (max-width: 930px) {
     font-size: 24px;
-    margin-top: 20%;
+    margin: auto;
   }
   text-align: center;
   font-size: 23.74px;
-  margin-top: 28%;
+  margin-top: 24%;
 `;
 const LineInfoFont3 = styled.h1`
-  @media (max-width: 900px) {
+  @media screen and (max-width: 930px) {
     font-size: 11px;
-    margin-top: 40%;
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
   text-align: center;
   font-size: 23.74px;
-  margin-top: 30%;
-  margin-bottom: 30%;
+  margin-top: 24%;
 `;
 const LineInfoFont4 = styled.h1`
-  @media (max-width: 900px) {
+  @media screen and (max-width: 930px) {
     font-size: 11px;
-    margin-top: 20%;
+    margin: auto;
   }
   text-align: center;
   font-size: 23.74px;
-  margin-top: 28%;
+  margin-top: 24%;
 `;
 
 const DetailPresenter = props => (
@@ -214,14 +221,14 @@ const DetailPresenter = props => (
         <InfoButton>첫차</InfoButton>
         <InfoButton>막차</InfoButton>
         <LineInfoDetail>
-          <LineInfoFont1>내선</LineInfoFont1>
+          <LineInfoFont1>{props.RouteUp}</LineInfoFont1>
           <LineInfoDivider />
-          <LineInfoFont2>외선</LineInfoFont2>
+          <LineInfoFont2>{props.RouteDown}</LineInfoFont2>
         </LineInfoDetail>
         <LineInfoDetail>
-          <LineInfoFont1>{props.LineLastNumber1}</LineInfoFont1>
+          <LineInfoFont1>{props.LastStationUp}</LineInfoFont1>
           <LineInfoDivider />
-          <LineInfoFont2>{props.LineLastNumber2}</LineInfoFont2>
+          <LineInfoFont2>{props.LastStationDown}</LineInfoFont2>
         </LineInfoDetail>
         <LineInfoDetail>
           <LineInfoFont3>(평일)05:20 (주말)06:00</LineInfoFont3>
@@ -245,8 +252,10 @@ const DetailPresenter = props => (
 DetailPresenter.propTypes = {
   LineColor: PropTypes.string.isRequired,
   LineNumber: PropTypes.string.isRequired,
-  LineLastNumber1: PropTypes.string.isRequired,
-  LineLastNumber2: PropTypes.string.isRequired,
+  LastStationUp: PropTypes.string.isRequired,
+  LastStationDown: PropTypes.string.isRequired,
+  RouteUp: PropTypes.string.isRequired,
+  RouteDown: PropTypes.string.isRequired,
   Active: PropTypes.string.isRequired,
   setActive: PropTypes.func.isRequired,
   match: PropTypes.shape({
