@@ -3,6 +3,7 @@ import Header from '../../Components/Header';
 import RouteMap from './RouteMap';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
+import Footer from '../../Components/Footer';
 
 const MapContainer = styled.div`
   @media (max-width: 900px) {
@@ -21,6 +22,7 @@ const RouteMapPresenter = () => (
     <MapContainer>
       <RouteMap />
     </MapContainer>
+    <Footer></Footer>
   </>
 );
 
