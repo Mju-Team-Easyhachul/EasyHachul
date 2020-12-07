@@ -174,7 +174,7 @@ const LineInfoFont4 = styled.h1`
   @media screen and (max-width: 930px) {
     font-size: 15px;
 
-    margin-top: 10px;
+    margin-top: 8px;
     margin-bottom: 10px;
   }
   text-align: center;
@@ -196,6 +196,11 @@ const LineContainer = styled.div`
   justify-content: space-between;
 `;
 
+const Spacer = styled.div`
+  @media screen and (max-width: 930px) {
+    height: 150px;
+  }
+`;
 const DetailPresenter = props => (
   <>
     <Helmet>
@@ -287,6 +292,7 @@ const DetailPresenter = props => (
 
     {/* 주변지도 */}
     {props.Active === '주변지도' && <MapContent></MapContent>}
+    <Spacer></Spacer>
     <Footer></Footer>
   </>
 );

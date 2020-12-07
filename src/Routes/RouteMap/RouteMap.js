@@ -501,10 +501,16 @@ RouteMap.propTypes = {
 };
 
 const MapContainer = styled.div`
-  width: 10%;
+  width: 79%;
   height: 60%;
   margin-top: ${(props) => props.mapMarginTop};  
   margin-left: ${(props) => props.mapMarginLeft};
+  @media (max-width: 900px) {
+    height: 100%;
+    width: 100%;
+    margin-left: 0;
+    overflow: scroll;
+  }
 `;
 
 export default withRouter(RouteMap);

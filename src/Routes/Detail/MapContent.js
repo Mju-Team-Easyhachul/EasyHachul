@@ -6,7 +6,7 @@ class MapContent extends Component {
   componentDidMount() {
     const script = document.createElement('script');
     script.async = true;
-    script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=본인의앱키&autoload=false';
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_KEY}&autoload=false`;
     document.head.appendChild(script);
 
     script.onload = () => {
@@ -26,7 +26,7 @@ class MapContent extends Component {
     };
   }
   render() {
-    return <MapContents id="Mymap"></MapContents>; // 이부분이 지도를 띄우게 될 부분.
+    return <MapContents id="Mymap" style={{ zIndex: '0' }}></MapContents>; // 이부분이 지도를 띄우게 될 부분.
   }
 }
 
