@@ -84,7 +84,7 @@ const DownloadPresenter = () => (
       <DownloadTextContainer>
         <DownloadText1>Download the latest version</DownloadText1>
         <DownloadText2>노선도 파일 크기 : 70KB</DownloadText2>
-        <DownloadText3>Release data December 7, 2020</DownloadText3>
+        <DownloadText3>Release data December 8, 2020</DownloadText3>
       </DownloadTextContainer>
       <ButtonContainer>
         <ButtonText>아래의 버튼을 눌러 지하철 노선도 이미지를 다운로드</ButtonText>
