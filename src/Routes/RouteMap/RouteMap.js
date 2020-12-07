@@ -500,6 +500,12 @@ const MapContainer = styled.div`
   height: 60%;
   margin-top: 3%;
   margin-left: 10.5%;
+  @media (max-width: 900px) {
+    height: 100%;
+    width: 100%;
+    margin-left: 0;
+    overflow: scroll;
+  }
 `;
 
 export default withRouter(RouteMap);
