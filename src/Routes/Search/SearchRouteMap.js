@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-const data = {
+let tempData = {
   nodes: [
     //1호선 노드
     { id: '101', name: '101', x: 90, y: 600, labelPosition: 'left' },
@@ -442,6 +442,29 @@ const data = {
   focusedNodeId: 'nodeIdToTriggerZoomAnimation',
 };
 
+// Graph에 들어갈 data
+let data = {
+  nodes: [],
+  links: [],
+};
+
+// search data 받을 array
+//prettier-ignore
+let searchLine = ['107', '308', '307', '402', '403', '404','405','406','407','115','408','409','410','411','412','413','414','415','416','417','216'];
+
+// 노선도 node 삽입
+for (var i in searchLine) {
+  data.nodes.push(tempData.nodes.find(x => x.id === searchLine[i]));
+}
+
+// 노선도 link 삽입
+for (var j = 0; j < searchLine.length; j++) {
+  if (j !== searchLine.length - 1) {
+    //prettier-ignore
+    data.links.push(tempData.links.find(x => (x.source === searchLine[j] && x.target === searchLine[j + 1])));
+  }
+}
+
 const myConfig = {
   height: 1200,
   width: 2000,
@@ -472,7 +495,7 @@ const myConfig = {
   //   },
 };
 
-class RouteMap extends Component {
+class SearchRouteMap extends Component {
   onClickNode = nodeId => {
     window.alert(`${nodeId} 역 정보로 이동합니다!`);
     this.props.history.push('/Detail:' + `${nodeId}`);
@@ -491,7 +514,7 @@ class RouteMap extends Component {
   }
 }
 
-RouteMap.propTypes = {
+SearchRouteMap.propTypes = {
   history: PropTypes.any.isRequired,
 };
 
@@ -502,4 +525,4 @@ const MapContainer = styled.div`
   margin-left: 10.5%;
 `;
 
-export default withRouter(RouteMap);
+export default withRouter(SearchRouteMap);
