@@ -951,7 +951,6 @@ export default class extends React.Component {
       ...path
     ];
 
-    console.log(totalPath);
     this.setState({
       DijkstraTotalPath : totalPath,
     })

@@ -13,7 +13,6 @@ export default class extends React.Component {
   }
 
   showModal(e) {
-    console.log(this.state.isModalOpen);
     if (this.state.isModalOpen === false) {
       let modalText = e.target.parentElement.innerText;
       if (modalText[0] == '마') {
@@ -29,9 +28,7 @@ export default class extends React.Component {
       isModalOpen: !this.state.isModalOpen,
     });
   }
-  handleReportButton(e) {
-    console.log(e);
-  }
+  handleReportButton(e) {}
 
   render() {
     const { reportText, isModalOpen, modalText } = this.state;

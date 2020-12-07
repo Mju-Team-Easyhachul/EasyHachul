@@ -187,7 +187,6 @@ class Modal extends Component {
   }
 
   render() {
-    console.log('이메일키' + process.env.REACT_APP_EMAILJS_TEMPLATE_KEY);
     const { className, children } = this.props;
     return (
       <>
