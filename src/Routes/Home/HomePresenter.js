@@ -338,7 +338,7 @@ const HomePresenter = () => (
           </Button1>
         </Link>
       </ButtonContainer>
-      <Link to="/Faq" style={{ textDecoration: 'none' }}>
+      <Link to="/RouteMap" style={{ textDecoration: 'none' }}>
         <DownloadButtonContainer>
           <DownloadButton>
             <DownloadButtonText>노선도보러가기</DownloadButtonText>
