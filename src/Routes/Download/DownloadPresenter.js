@@ -89,7 +89,7 @@ const DownloadPresenter = () => (
       <ButtonContainer>
         <ButtonText>아래의 버튼을 눌러 지하철 노선도 이미지를 다운로드</ButtonText>
 
-        <a style={{ textDecoration: 'none' }} href={process.env.PUBLIC_URL + '/files/myFile.png'} download>
+        <a style={{ textDecoration: 'none' }} href={process.env.PUBLIC_URL + '/files/SubwayMap.png'} download>
           <Button>→</Button>
         </a>
       </ButtonContainer>
