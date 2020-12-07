@@ -294,6 +294,9 @@ export default class extends React.Component {
       DijkstraArrivalTime: '00:00',
       DijkstraDistance: 0,
       DijkstraMoney: 0,
+      DijkstraTotalPath: [],
+      MapMarginTop: "0%",
+      MapMarginLeft: "0%",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -358,6 +361,13 @@ export default class extends React.Component {
   };
 
   setActiveSearchResult = e => {
+    if (this.state.SearchResult === true) {
+      alert('새로운 노선도를 출력합니다!');
+      this.setState({
+        SearchResult: false,
+        Share: false,
+      })
+    }
     this.setState(
       {
         SearchDepartureTime: this.state.DepartureTime,
@@ -935,6 +945,17 @@ export default class extends React.Component {
       }
     }
 
+    var startStation = [String(this.state.SearchDepartureStation)];
+    var totalPath = [
+      ...startStation,
+      ...path
+    ];
+
+    console.log(totalPath);
+    this.setState({
+      DijkstraTotalPath : totalPath,
+    })
+
     var timeSplit = this.state.SearchDepartureTime.split(':');
     timeSplit[0] *= 1;
     timeSplit[1] *= 1;
@@ -1038,6 +1059,9 @@ export default class extends React.Component {
         DijkstraArrivalTime={this.state.DijkstraArrivalTime}
         DijkstraDistance={this.state.DijkstraDistance}
         DijkstraMoney={this.state.DijkstraMoney}
+        MapMarginTop={this.state.MapMarginTop}
+        MapMarginLeft={this.state.MapMarginLeft}
+        DijkstraTotalPath={this.state.DijkstraTotalPath}
         setActiveTab={this.setActiveTab}
         setDepartureTime={this.setDepartureTime}
         setDepartureStation={this.setDepartureStation}
