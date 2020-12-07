@@ -151,16 +151,6 @@ const SearchInput = styled.input`
   border: solid 3px #ffffff;
   margin: 8px;
 
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    left: 10px;
-    color: white;
-  }
-  :-ms-input-placeholder {
-    left: 10px;
-    color: white;
-  }
-
   @media (min-width: 320px) and (max-width: 480px) {
     -webkit-appearance: none;
     width: 70%;
@@ -275,7 +265,11 @@ const ShareInput = styled.input`
 
   @media (min-width: 320px) and (max-width: 480px) {
     width: 80%;
-    height: 10%;
+    height: 50px;
+    &:focus {
+      outline: none;
+    }
+    -webkit-appearance: none;
   }
 `;
 
