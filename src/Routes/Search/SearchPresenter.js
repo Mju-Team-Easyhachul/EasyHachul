@@ -62,7 +62,6 @@ const SearchPanel = styled.div`
 
   @media (min-width: 320px) and (max-width: 480px) {
     height: 34%;
-    position: absolute;
   }
 `;
 
