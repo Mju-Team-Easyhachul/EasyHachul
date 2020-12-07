@@ -112,6 +112,12 @@ const ReportButton = styled.div`
   color: white;
 `;
 
+const Spacer = styled.div`
+  @media screen and (max-width: 900px) {
+    height: 100px;
+  }
+`;
+
 const ReportPresenter = props => (
   <>
     <Helmet>
@@ -149,6 +155,7 @@ const ReportPresenter = props => (
       {props.modalText}
     </Modal>
     <Footer></Footer>
+    <Spacer></Spacer>
   </>
 );
 
