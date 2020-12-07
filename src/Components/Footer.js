@@ -15,7 +15,7 @@ const FooterContainer = styled.div`
   padding: 15px;
   background-color: #2d4b5a;
   @media (min-width: 320px) and (max-width: 480px) {
-    position: sticky;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;

@@ -21,6 +21,11 @@ const FaqBoardContainer = styled.div`
   z-index: 0;
 `;
 
+const Spacer = styled.div`
+  @media screen and (max-width: 900px) {
+    height: 500px;
+  }
+`;
 //반려동물
 const FaqBoard1 = styled.div`
   height: 20%;
@@ -45,7 +50,7 @@ const FaqBoard2 = styled.div`
   margin-bottom: 4.76%;
   padding: 3% 10.9% 5.8% 3.9%;
   border-radius: 50px;
-  background-color:#B6E6DB;
+  background-color: #b6e6db;
   @media screen and (max-width: 900px) {
     width: 374.6px;
     height: 51%;
@@ -62,7 +67,7 @@ const FaqBoard3 = styled.div`
   margin-bottom: 4.76%;
   padding: 3% 10.9% 5.8% 3.9%;
   border-radius: 50px;
-  background-color:#B6E6DB;
+  background-color: #b6e6db;
   @media screen and (max-width: 900px) {
     width: 374.6px;
     height: 45%;
@@ -153,7 +158,7 @@ const FaqPresenter = () => (
         </FaqText3>
       </FaqBoard2>
       <FaqBoard3>
-        <FaqText1>지하철에 물건을 두고 내렸을 때, 이렇게 찾으세요!</FaqText1>
+        <FaqText1>지하철에 물건을 두고 내렸을 때 이렇게!</FaqText1>
         <FaqText2>Easy하철 알림</FaqText2>
         <FaqText3>
           <FaqTextline>
@@ -169,6 +174,7 @@ const FaqPresenter = () => (
       </FaqBoard3>
     </FaqBoardContainer>
     <Footer></Footer>
+    <Spacer></Spacer>
   </>
 );
 
