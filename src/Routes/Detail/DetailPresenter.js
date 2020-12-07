@@ -4,11 +4,14 @@ import styled, { css } from 'styled-components';
 import Helmet from 'react-helmet';
 import Header from '../../Components/Header';
 import MapContent from './MapContent';
+import Footer from '../../Components/Footer';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
 const TopContainer = styled.div`
   @media screen and (max-width: 900px) {
-    height: 5%;
+    height: 7%;
+    width: 100%;
+    margin: 0;
   }
   width: 79%;
   height: 10%;
@@ -18,6 +21,7 @@ const TopContainer = styled.div`
 const LineNumber = styled.div`
   @media (max-width: 900px) {
     height: 92%;
+    line-height: 50%;
   }
   width: 20%;
   height: 96%;
@@ -38,7 +42,11 @@ const LineNumberFont = styled.h1`
 
 const SelectContainer = styled.div`
   @media screen and (max-width: 900px) {
-    margin: 1% 10% 1% 10.4%;
+    margin: 0;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
   }
   width: 80%;
   height: 10%;
@@ -47,7 +55,8 @@ const SelectContainer = styled.div`
 const SelectButton = styled.button`
   @media screen and (max-width: 900px) {
     font-size: 16px;
-    height: 80%;
+    height: 100%;
+    width: 100%;
   }
   width: 33%;
   height: 100%;
@@ -58,7 +67,8 @@ const SelectButton = styled.button`
 const SelectInfoButton = styled.button`
   @media screen and (max-width: 900px) {
     font-size: 16px;
-    height: 80%;
+    height: 100%;
+    width: 100%;
   }
   width: 33%;
   height: 100%;
@@ -71,6 +81,10 @@ const BottomContainer = styled.div`
   width: 80%;
   height: 80%;
   margin: 1px 10% 1% 10.4%;
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 const BaseInfoDivider = styled.hr`
   width: 98.6%;
@@ -89,7 +103,10 @@ const InfoButton = styled.button`
   @media (max-width: 900px) {
     font-size: 17px;
     height: 7%;
+    width: 25%;
+    margin: 0;
   }
+
   width: 24.8%;
   height: 10%;
   background: #303747;
@@ -99,31 +116,35 @@ const InfoButton = styled.button`
 const LineInfoDetail = styled.div`
   @media (max-width: 930px) {
     height: 20%;
-    width: 23.5%;
+    width: 50%;
+    flex-direction: row;
+    margin: 0;
     border-radius: 0px;
   }
   background-color: #ffffff;
   margin-top: 1%;
   margin-bottom: 2%;
   height: 50%;
-  width: 24.5%;
+  width: 24%;
   display: inline-block;
-  border: 2px solid;
+  border: 1px solid;
   border-color: #535353;
   border-radius: 30px;
 `;
 const LineInfoDivider = styled.hr`
   @media (max-width: 930px) {
     border: 0;
+    margin: 0;
   }
-  align: center;
+  text-align: center;
   border: 1px solid #717171;
   margin-top: 24%;
 `;
 const LineInfoFont1 = styled.h1`
   @media screen and (max-width: 930px) {
     font-size: 24px;
-    margin-top: 30px;
+    margin-top: 20px;
+    margin-left: 1px;
     margin-bottom: 20px;
   }
   text-align: center;
@@ -133,17 +154,17 @@ const LineInfoFont1 = styled.h1`
 const LineInfoFont2 = styled.h1`
   @media screen and (max-width: 930px) {
     font-size: 24px;
-    margin: auto;
+    margin: 0;
   }
   text-align: center;
   font-size: 23.74px;
+  margin-bottom: 24%;
   margin-top: 24%;
 `;
 const LineInfoFont3 = styled.h1`
   @media screen and (max-width: 930px) {
-    font-size: 11px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    font-size: 15px;
+    margin-top: 10px;
   }
   text-align: center;
   font-size: 23.74px;
@@ -151,12 +172,28 @@ const LineInfoFont3 = styled.h1`
 `;
 const LineInfoFont4 = styled.h1`
   @media screen and (max-width: 930px) {
-    font-size: 11px;
-    margin: auto;
+    font-size: 15px;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
   text-align: center;
   font-size: 23.74px;
   margin-top: 24%;
+  margin-bottom: 24%;
+`;
+
+const LineContainer = styled.div`
+  @media screen and (max-width: 930px) {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+  }
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const DetailPresenter = props => (
@@ -167,6 +204,7 @@ const DetailPresenter = props => (
     <Header />
 
     {/* 역 번호 */}
+
     <TopContainer color={props.LineColor}>
       <LineNumber>
         <LineNumberFont>{props.LineNumber}</LineNumberFont>
@@ -220,31 +258,36 @@ const DetailPresenter = props => (
         <InfoButton>종착역</InfoButton>
         <InfoButton>첫차</InfoButton>
         <InfoButton>막차</InfoButton>
-        <LineInfoDetail>
-          <LineInfoFont1>{props.RouteUp}</LineInfoFont1>
-          <LineInfoDivider />
-          <LineInfoFont2>{props.RouteDown}</LineInfoFont2>
-        </LineInfoDetail>
-        <LineInfoDetail>
-          <LineInfoFont1>{props.LastStationUp}</LineInfoFont1>
-          <LineInfoDivider />
-          <LineInfoFont2>{props.LastStationDown}</LineInfoFont2>
-        </LineInfoDetail>
-        <LineInfoDetail>
-          <LineInfoFont3>(평일)05:20 (주말)06:00</LineInfoFont3>
-          <LineInfoDivider />
-          <LineInfoFont4>(평일)05:20 (주말)06:00</LineInfoFont4>
-        </LineInfoDetail>
-        <LineInfoDetail>
-          <LineInfoFont3>(평일)24:20 (주말)23:30</LineInfoFont3>
-          <LineInfoDivider />
-          <LineInfoFont4>(평일)24:20 (주말)23:30</LineInfoFont4>
-        </LineInfoDetail>
+
+        <LineContainer>
+          <LineInfoDetail>
+            <LineInfoFont1>{props.RouteUp}</LineInfoFont1>
+            <LineInfoDivider />
+            <LineInfoFont2>{props.RouteDown}</LineInfoFont2>
+          </LineInfoDetail>
+          <LineInfoDetail>
+            <LineInfoFont1>{props.LastStationUp}</LineInfoFont1>
+            <LineInfoDivider />
+            <LineInfoFont2>{props.LastStationDown}</LineInfoFont2>
+          </LineInfoDetail>
+
+          <LineInfoDetail>
+            <LineInfoFont3>(평일)05:20 (주말)06:00</LineInfoFont3>
+            <LineInfoDivider />
+            <LineInfoFont4>(평일)05:20 (주말)06:00</LineInfoFont4>
+          </LineInfoDetail>
+          <LineInfoDetail>
+            <LineInfoFont3>(평일)24:20 (주말)23:30</LineInfoFont3>
+            <LineInfoDivider />
+            <LineInfoFont4>(평일)24:20 (주말)23:30</LineInfoFont4>
+          </LineInfoDetail>
+        </LineContainer>
       </BottomContainer>
     )}
 
     {/* 주변지도 */}
     {props.Active === '주변지도' && <MapContent></MapContent>}
+    <Footer></Footer>
   </>
 );
 
