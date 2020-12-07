@@ -466,22 +466,27 @@ const myConfig = {
     height: 50,
     fontSize: 25,
   },
-  //   d3: {
-  //     gravity: -400,
-  //     linkLength: 100,
-  //   },
 };
 
 class RouteMap extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      marginTop : "3%",
+      marginLeft : "10.5%"
+    }
+  }
+
   onClickNode = nodeId => {
     window.alert(`${nodeId} 역 정보로 이동합니다!`);
     this.props.history.push('/Detail:' + `${nodeId}`);
   };
   render() {
     return (
-      <MapContainer>
+      <MapContainer margin-top={this.state.marginTop} margin-left={this.state.marginLeft}>
         <Graph
-          id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+          id="graph-id"
           data={data}
           config={myConfig}
           onClickNode={this.onClickNode}
@@ -496,10 +501,10 @@ RouteMap.propTypes = {
 };
 
 const MapContainer = styled.div`
-  width: 79%;
+  width: 10%;
   height: 60%;
-  margin-top: 3%;
-  margin-left: 10.5%;
+  margin-top: ${(props) => props.mapMarginTop};  
+  margin-left: ${(props) => props.mapMarginLeft};
 `;
 
 export default withRouter(RouteMap);
