@@ -197,6 +197,7 @@ const LineContainer = styled.div`
 `;
 
 const Spacer = styled.div`
+  height: 150px;
   @media screen and (max-width: 930px) {
     height: 150px;
   }
